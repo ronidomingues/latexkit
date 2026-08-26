@@ -1,0 +1,17 @@
+{
+  "name": "{{projectName}}",
+  "version": "1.0.0",
+  "private": true,
+  "description": "{{title}}",
+  "scripts": {
+    "build": "latexgen build",
+    "pdf": "latexgen build",
+    "watch": "latexgen watch",
+    "clean": "latexgen clean",
+    "check": "latexgen check",
+    "doctor": "latexgen doctor"
+  },
+  "devDependencies": {
+    "latexgen": "^{{latexgenVersion}}"
+  }
+}
