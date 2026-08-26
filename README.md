@@ -34,6 +34,7 @@ existe no seu ambiente.
 | id | Documento |
 | --- | --- |
 | `article` | Artigo cientifico ABNT (NBR 6022) |
+| `tcc` | TCC, monografia, dissertacao ou tese ABNT (NBR 14724) |
 | `beamer` | Apresentacao de slides |
 
 Cada template gera um projeto que compila de imediato, com texto de exemplo
@@ -72,6 +73,22 @@ meu-artigo/
 ├── figures/  tables/        imagens e tabelas
 └── out/main.pdf             o resultado
 ```
+
+O `tcc` acrescenta a esse esqueleto os elementos que a NBR 14724 exige:
+
+```
+minha-tese/
+├── pretextual/              capa, folha de rosto, ficha catalografica,
+│                            folha de aprovacao, dedicatoria, agradecimentos,
+│                            epigrafe, resumo/abstract e listas
+├── content/                 os capitulos
+└── postextual/              apendices e anexos
+```
+
+Apendices e anexos sao numerados sozinhos (APENDICE A, ANEXO A): cada
+`\chapter` dentro de `postextual/apendices.tex` vira uma letra. A ficha
+catalografica e a folha de aprovacao vem com instrucoes de como substitui-las
+pelo que a sua biblioteca e a sua banca fornecerem.
 
 ### Metadados
 

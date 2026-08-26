@@ -1,0 +1,50 @@
+% =====================================================================
+%  Pacotes e configuracoes gerais do preambulo.
+%  Adicione aqui os pacotes que o seu trabalho precisar.
+% =====================================================================
+
+% --- Codificacao e idioma --------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% --- Elementos graficos ----------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+
+% --- Matematica ------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Tipografia ------------------------------------------------------
+\usepackage{microtype}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{xcolor}
+
+% --- Links -----------------------------------------------------------
+% A abntex2 ja carrega o hyperref; aqui so ajustamos a aparencia.
+% Para a versao de impressao, troque colorlinks por false.
+\definecolor{lgLink}{RGB}{0,80,160}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=lgLink,
+  citecolor=lgLink,
+  urlcolor=lgLink,
+  bookmarksdepth=4
+}
+
+% --- Espacamento -----------------------------------------------------
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+\OnehalfSpacing
+
+% --- Comandos de conveniencia ----------------------------------------
+% A abntex2 ja fornece \fonte{...} para a fonte de figuras e tabelas,
+% exigida pela NBR 14724 logo abaixo do elemento. Use assim:
+%   \fonte{Elaborado pelo autor (2026).}
+% Adicione aqui os seus proprios comandos.

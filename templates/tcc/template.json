@@ -1,0 +1,58 @@
+{
+  "id": "tcc",
+  "name": "Trabalho academico ABNT (NBR 14724)",
+  "description": "TCC, monografia, dissertacao ou tese: capa, folha de rosto, ficha catalografica, folha de aprovacao, dedicatoria, agradecimentos, epigrafe, resumo, listas, sumario, capitulos, apendices e anexos.",
+  "documentClass": "abntex2",
+  "engine": "pdflatex",
+  "entry": "main.tex",
+  "vars": [
+    { "key": "title", "prompt": "Titulo do trabalho", "required": true },
+    { "key": "titleEn", "prompt": "Titulo em ingles", "default": "" },
+    { "key": "author", "prompt": "Autor", "required": true },
+    { "key": "institution", "prompt": "Instituicao", "required": true },
+    { "key": "unit", "prompt": "Unidade (faculdade, instituto, centro)", "default": "" },
+    { "key": "course", "prompt": "Curso ou programa de pos-graduacao", "default": "" },
+    {
+      "key": "degreeType",
+      "prompt": "Natureza (ex: Dissertacao de Mestrado, Tese de Doutorado, TCC)",
+      "default": "Trabalho de Conclusao de Curso"
+    },
+    {
+      "key": "preamble",
+      "prompt": "Preambulo da folha de rosto (a redacao exata da sua instituicao)",
+      "default": "Trabalho apresentado ao curso indicado, como requisito parcial para a obtencao do titulo correspondente.",
+      "example": "Trabalho apresentado ao curso indicado, como requisito parcial para a obtencao do titulo correspondente."
+    },
+    { "key": "advisor", "prompt": "Orientador", "required": true },
+    { "key": "coadvisor", "prompt": "Coorientador", "default": "" },
+    { "key": "city", "prompt": "Cidade", "required": true },
+    { "key": "year", "prompt": "Ano", "auto": "year" },
+    {
+      "key": "keywords",
+      "prompt": "Palavras-chave (separadas por ponto)",
+      "default": "palavra-chave. outra palavra. terceira palavra.",
+      "example": "palavra-chave. outra palavra. terceira palavra."
+    },
+    {
+      "key": "keywordsEn",
+      "prompt": "Keywords em ingles",
+      "default": "keyword. another keyword. third keyword.",
+      "example": "keyword. another keyword. third keyword."
+    }
+  ],
+  "features": {
+    "bibliography": true,
+    "markdown": true,
+    "abstract": true,
+    "figures": true
+  },
+  "checks": [
+    "metadata",
+    "example-values",
+    "figure-caption",
+    "figure-source",
+    "orphan-citations",
+    "uncited-entries",
+    "unused-figures"
+  ]
+}

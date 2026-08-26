@@ -1,0 +1,53 @@
+% =====================================================================
+%  Folha de aprovacao (NBR 14724, elemento obrigatorio)
+%
+%  Preencha os nomes da banca. Depois da defesa, muitas instituicoes
+%  exigem que esta folha seja substituida pela versao digitalizada e
+%  assinada — nesse caso, use \includepdf{figures/folha-assinada.pdf}
+%  (requer \usepackage{pdfpages} em config/packages.tex).
+% =====================================================================
+
+\begin{folhadeaprovacao}
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+      \SingleSpacing
+      \imprimirpreambulo
+    \end{minipage}
+    \vspace*{\fill}
+  \end{center}
+
+  Trabalho aprovado. \lgCity, \lgYear.
+
+  \vspace{1.5cm}
+
+  \begin{center}
+    \rule{9cm}{0.4pt} \\
+    \lgAdvisor \\
+    Orientador \\
+
+    \vspace{1.2cm}
+    \rule{9cm}{0.4pt} \\
+    Nome do primeiro membro da banca \\
+    Instituicao \\
+
+    \vspace{1.2cm}
+    \rule{9cm}{0.4pt} \\
+    Nome do segundo membro da banca \\
+    Instituicao \\
+  \end{center}
+
+  \vspace*{\fill}
+  \begin{center}
+    \lgCity \\
+    \lgYear
+  \end{center}
+\end{folhadeaprovacao}

@@ -28,14 +28,42 @@ const CLI = join(packageRoot, 'bin', 'latexgen.js');
 /** Uma compilacao completa pode passar de um minuto em maquina fria. */
 const TIMEOUT = 300_000;
 
-/** Valores usados nos campos obrigatorios de qualquer template. */
-const METADATA = [
-  '--title', 'Documento de Teste com Acentuacao & Simbolos',
-  '--titleEn', 'Test Document',
-  '--author', 'Autor de Teste',
-  '--institution', 'Universidade de Teste',
-  '--city', 'Cidade',
-];
+/**
+ * Valores conhecidos, usados quando o template declara essas chaves.
+ * O titulo carrega `&` de proposito: e o caractere que mais quebra escape.
+ */
+const KNOWN_VALUES = {
+  title: 'Documento de Teste com Acentuacao & Simbolos',
+  titleEn: 'Test Document',
+  author: 'Autor de Teste',
+  institution: 'Universidade de Teste',
+  advisor: 'Prof. Dr. Orientador de Teste',
+  city: 'Cidade',
+};
+
+/**
+ * Monta as flags de metadado a partir do manifesto do template.
+ *
+ * Derivar do manifesto, em vez de fixar uma lista, e o que mantem a promessa
+ * de que basta criar a pasta do template para a suite cobri-lo: um template
+ * novo que exija um campo novo passa a receber esse campo sozinho.
+ *
+ * @param {import('../../src/templates.js').Template} template
+ * @returns {string[]}
+ */
+function metadataArgs(template) {
+  /** @type {string[]} */
+  const args = [];
+  for (const variable of template.vars) {
+    const known = KNOWN_VALUES[/** @type {keyof typeof KNOWN_VALUES} */ (variable.key)];
+    if (known !== undefined) {
+      args.push(`--${variable.key}`, known);
+    } else if (variable.required) {
+      args.push(`--${variable.key}`, `Valor de teste para ${variable.key}`);
+    }
+  }
+  return args;
+}
 
 /**
  * @param {string[]} args
@@ -72,7 +100,7 @@ for (const template of templates) {
         if (!available) return t.skip('sem motor LaTeX nesta maquina');
 
         const dir = join(await tempDir(t), template.id);
-        await latexgen(['new', template.id, dir, '--yes', ...METADATA]);
+        await latexgen(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
 
         // A estrutura precisa estar completa antes de compilar.
         for (const file of ['main.tex', 'latexgen.config.json', 'package.json', 'README.md']) {
@@ -95,7 +123,7 @@ for (const template of templates) {
       { timeout: TIMEOUT },
       async (t) => {
         const dir = join(await tempDir(t), template.id);
-        await latexgen(['new', template.id, dir, '--yes', ...METADATA]);
+        await latexgen(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
 
         // O check sai com codigo 1 quando ha erro; avisos nao derrubam.
         await assert.doesNotReject(
@@ -113,7 +141,7 @@ for (const template of templates) {
         if (!template.features.bibliography) return t.skip('template sem bibliografia');
 
         const dir = join(await tempDir(t), `${template.id}-biblatex`);
-        await latexgen(['new', template.id, dir, '--yes', '--bib=biblatex', ...METADATA]);
+        await latexgen(['new', template.id, dir, '--yes', '--bib=biblatex', ...metadataArgs(template)]);
 
         try {
           await latexgen(['build'], dir);
@@ -142,7 +170,9 @@ describe('cadeia de motores', () => {
       if (!available) return t.skip('sem motor LaTeX nesta maquina');
 
       const dir = join(await tempDir(t), 'multi-engine');
-      await latexgen(['new', 'article', dir, '--yes', ...METADATA]);
+      const article = templates.find((item) => item.id === 'article');
+      assert.ok(article, 'o template article deveria existir');
+      await latexgen(['new', 'article', dir, '--yes', ...metadataArgs(article)]);
 
       const results = await detectAll({
         root: dir,

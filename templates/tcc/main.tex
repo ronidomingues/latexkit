@@ -1,0 +1,82 @@
+% =====================================================================
+%  Trabalho academico segundo a ABNT (NBR 14724), gerado por latexgen.
+%  Serve para TCC, monografia, dissertacao de mestrado e tese de doutorado.
+%
+%  Este arquivo e o "indice" do documento: ele so declara a classe e
+%  inclui as partes. Nao adicione texto aqui.
+%
+%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Pacotes do preambulo            -> config/packages.tex
+%    - Ajustes de estilo               -> config/style.tex
+%    - Elementos pre-textuais          -> pretextual/*.tex
+%    - Capitulos                       -> content/*.tex
+%    - Apendices e anexos              -> postextual/*.tex
+%    - Referencias                     -> bib/references.bib
+%
+%  Compile com:  npm run build
+% =====================================================================
+
+\documentclass[
+  12pt,             % corpo do texto em 12pt, como pede a NBR 14724
+  oneside,          % entrega digital. Para impressao frente-e-verso: twoside
+  a4paper,
+  chapter=TITLE,    % titulos de capitulo em caixa alta
+  english,          % idioma secundario, para o abstract
+  brazil,           % o ultimo idioma listado e o principal
+  sumario=tradicional
+]{abntex2}
+
+% --- Preambulo -------------------------------------------------------
+\input{config/packages}       % pacotes e configuracoes gerais
+\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/style}          % seus ajustes de estilo (editavel)
+\input{config/docinfo}        % liga os metadados aos comandos da abntex2
+\input{config/bibliography}   % backend de citacoes e referencias
+
+\begin{document}
+\selectlanguage{brazil}
+\frenchspacing
+
+% =====================================================================
+%  ELEMENTOS PRE-TEXTUAIS
+% =====================================================================
+\pretextual
+
+\imprimircapa
+\imprimirfolhaderosto
+
+\input{pretextual/ficha-catalografica}
+\input{pretextual/folha-aprovacao}
+\input{pretextual/dedicatoria}
+\input{pretextual/agradecimentos}
+\input{pretextual/epigrafe}
+\input{pretextual/resumo}
+\input{pretextual/listas}
+
+% Sumario. O asterisco evita que o proprio sumario apareca nele.
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% =====================================================================
+%  ELEMENTOS TEXTUAIS
+% =====================================================================
+\textual
+
+\input{content/01-introducao}
+\input{content/02-referencial}
+\input{content/03-metodologia}
+\input{content/04-resultados}
+\input{content/05-conclusao}
+
+% =====================================================================
+%  ELEMENTOS POS-TEXTUAIS
+% =====================================================================
+\postextual
+
+\lgPrintBibliography
+
+\input{postextual/apendices}
+\input{postextual/anexos}
+
+\end{document}
