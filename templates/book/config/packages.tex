@@ -1,0 +1,47 @@
+% =====================================================================
+%  Pacotes e configuracoes gerais do preambulo.
+% =====================================================================
+
+% --- Codificacao e idioma --------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+
+% --- Elementos graficos ----------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+% --- Matematica ------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Tipografia ------------------------------------------------------
+\usepackage{microtype}      % ajuste fino de espacamento e protrusao
+\usepackage{xcolor}
+\usepackage{epigraph}       % epigrafes de capitulo
+
+% --- Indice remissivo ------------------------------------------------
+% Marque termos no texto com \index{termo}; o indice se monta sozinho.
+\makeindex
+
+% --- Links -----------------------------------------------------------
+\usepackage{hyperref}
+\definecolor{lgLink}{RGB}{0,70,140}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=lgLink,
+  citecolor=lgLink,
+  urlcolor=lgLink,
+  bookmarksdepth=3
+}
+% Para a versao de impressao, troque a linha acima por:
+%   \hypersetup{hidelinks}
+
+% --- Comandos de conveniencia ----------------------------------------
+% Fonte de uma figura ou tabela.
+\newcommand{\fonte}[1]{%
+  \par\vspace{0.2em}{\footnotesize Fonte: #1}%
+}

@@ -1,0 +1,21 @@
+% =====================================================================
+%  Prefacio (opcional).
+%
+%  Vai na abertura, com numeracao romana, e por isso usa \chapter*:
+%  paginas de abertura nao entram na numeracao dos capitulos. O
+%  \addcontentsline garante que ele apareca no sumario mesmo assim.
+% =====================================================================
+
+\chapter*{Prefacio}
+\addcontentsline{toc}{chapter}{Prefacio}
+\markboth{Prefacio}{Prefacio}
+
+O prefacio conta ao leitor por que o livro existe, para quem ele foi escrito e
+como esta organizado. Quando escrito por outra pessoa, costuma vir assinado ao
+final.
+
+\vspace{1em}
+\begin{flushright}
+  \textit{\lgAuthor}\\
+  \lgIfCity{\lgCity, }{}\lgYear
+\end{flushright}

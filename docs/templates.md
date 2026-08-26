@@ -32,7 +32,7 @@ manifesto.
 | Campo | Para que serve |
 | --- | --- |
 | `id` | precisa bater com o nome da pasta |
-| `documentClass` | usado pelo preflight para conferir se a classe esta instalada |
+| `documentClass` | usado pelo preflight para conferir se a classe esta instalada; `abntex2`, `beamer` e `memoir` sao verificados, outras passam direto |
 | `engine` | motor TeX exigido: `pdflatex`, `xelatex` ou `lualatex` |
 | `vars` | vira prompt interativo, flag da CLI e macro no `metadata.tex` |
 | `features.bibliography` | ativa a copia do `config/bibliography.tex` e o preflight do backend |
@@ -61,7 +61,15 @@ templates/<id>/
 ```
 
 Nao inclua `config/metadata.tex` nem `config/bibliography.tex`: os dois sao
-gerados no scaffold.
+gerados no scaffold. O `bibliography.tex` so aparece quando
+`features.bibliography` e `true` — um template sem bibliografia nao recebe um
+arquivo que ninguem inclui.
+
+A estrutura acima e o minimo. Templates mais longos criam pastas proprias e as
+incluem no `main.tex` na ordem que o documento pedir: `pretextual/` e
+`postextual/` no `tcc` e no `report`, `frontmatter/` e `backmatter/` no `book`.
+Nao ha nada a declarar no manifesto para isso — o scaffold copia a arvore
+inteira do template.
 
 ## 3. A regra que sustenta tudo
 
@@ -90,9 +98,22 @@ O `config/docinfo.tex` do template faz a ponte para os comandos da classe:
 ```
 
 A substituicao `{{var}}` existe, mas so em arquivos nao-LaTeX (`.json`, `.md`,
-`.yml`, `.txt`), onde chaves nao tem significado. As variaveis disponiveis sao
-os metadados mais `projectName`, `templateId`, `templateName` e
-`latexgenVersion`.
+`.yml`, `.txt`), onde chaves nao tem significado. Dentro do seu template, voce
+pode usar qualquer metadado; ja os arquivos de `_shared/project/` valem para
+todos os templates e por isso so podem usar as variaveis que o scaffold
+garante:
+
+| Variavel | Valor |
+| --- | --- |
+| `projectName` | nome do diretorio, normalizado para nome de pacote npm |
+| `templateId` | id do template |
+| `templateName` | nome legivel do template |
+| `latexgenVersion` | versao do latexgen |
+| `documentTitle` | o `title` do documento; sem ele, o `subject` ou o `recipient`; sem nenhum, o nome do diretorio |
+
+`documentTitle` existe justamente porque nem todo template tem `title`: uma
+carta tem remetente, destinatario e assunto. Um teste unitario falha se algum
+arquivo compartilhado usar uma variavel fora dessa lista.
 
 ## 4. A ordem do preambulo
 

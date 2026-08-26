@@ -107,7 +107,11 @@ for (const template of templates) {
           assert.ok(existsSync(join(dir, file)), `faltou ${file}`);
         }
         assert.ok(existsSync(join(dir, 'config', 'metadata.tex')));
-        assert.ok(existsSync(join(dir, 'config', 'bibliography.tex')));
+        assert.equal(
+          existsSync(join(dir, 'config', 'bibliography.tex')),
+          Boolean(template.features.bibliography),
+          'config/bibliography.tex deve existir exatamente quando o template declara bibliografia',
+        );
 
         const { stdout } = await latexgen(['build'], dir);
         assert.match(stdout, /out\/main\.pdf/);

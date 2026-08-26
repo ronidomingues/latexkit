@@ -1,0 +1,38 @@
+% =====================================================================
+%  Listas de figuras, tabelas, abreviaturas e simbolos.
+%
+%  Sao elementos OPCIONAIS pela NBR 14724, mas a maioria das
+%  instituicoes exige a lista de figuras e a de tabelas quando o
+%  trabalho tem esses elementos. Apague o que nao usar.
+%
+%  As listas de figuras e de tabelas se preenchem sozinhas a partir dos
+%  \caption. As de siglas e simbolos sao escritas a mao, abaixo.
+% =====================================================================
+
+% --- Lista de ilustracoes --------------------------------------------
+% Fica vazia ate o trabalho ter a primeira figura com \caption. Se o seu
+% trabalho nao tiver ilustracoes, apague as tres linhas abaixo.
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+% --- Lista de tabelas ------------------------------------------------
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+% --- Lista de abreviaturas e siglas ----------------------------------
+% Em ordem alfabetica. Apague o ambiente inteiro se nao usar siglas.
+\begin{siglas}
+  \item[ABNT] Associacao Brasileira de Normas Tecnicas
+  \item[NBR] Norma Brasileira
+  \item[PDF] \emph{Portable Document Format}
+\end{siglas}
+
+% --- Lista de simbolos -----------------------------------------------
+% Na ordem em que aparecem no texto. Apague se nao usar simbolos.
+\begin{simbolos}
+  \item[$\alpha$] Taxa de aprendizado
+  \item[$\sigma$] Desvio padrao
+  \item[$\mu$] Media populacional
+\end{simbolos}

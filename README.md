@@ -31,11 +31,14 @@ existe no seu ambiente.
 
 ## Templates
 
-| id | Documento |
-| --- | --- |
-| `article` | Artigo cientifico ABNT (NBR 6022) |
-| `tcc` | TCC, monografia, dissertacao ou tese ABNT (NBR 14724) |
-| `beamer` | Apresentacao de slides |
+| id | Documento | Classe |
+| --- | --- | --- |
+| `article` | Artigo cientifico ABNT (NBR 6022) | abntex2 |
+| `tcc` | TCC, monografia, dissertacao ou tese ABNT (NBR 14724) | abntex2 |
+| `report` | Relatorio tecnico-cientifico ABNT (NBR 10719) | abntex2 |
+| `book` | Livro, com partes, epigrafes e indice remissivo | memoir |
+| `beamer` | Apresentacao de slides | beamer |
+| `letter` | Carta ou oficio no padrao oficio (MRPR) | article |
 
 Cada template gera um projeto que compila de imediato, com texto de exemplo
 mostrando como usar figuras, tabelas, equacoes e citacoes.
@@ -74,7 +77,8 @@ meu-artigo/
 └── out/main.pdf             o resultado
 ```
 
-O `tcc` acrescenta a esse esqueleto os elementos que a NBR 14724 exige:
+Templates mais longos acrescentam pastas a esse esqueleto. O `tcc` e o
+`report` separam os elementos que a norma exige:
 
 ```
 minha-tese/
@@ -89,6 +93,23 @@ Apendices e anexos sao numerados sozinhos (APENDICE A, ANEXO A): cada
 `\chapter` dentro de `postextual/apendices.tex` vira uma letra. A ficha
 catalografica e a folha de aprovacao vem com instrucoes de como substitui-las
 pelo que a sua biblioteca e a sua banca fornecerem.
+
+O `book` usa a divisao classica de um livro:
+
+```
+meu-livro/
+├── frontmatter/             folha de rosto, creditos, dedicatoria, prefacio
+├── content/                 os capitulos, agrupados em partes
+└── backmatter/              posfacio, referencias e indice remissivo
+```
+
+A abertura e numerada em algarismos romanos e o miolo recomeca em arabicos,
+como manda a convencao editorial. Termos marcados com `\index{termo}` no texto
+alimentam o indice remissivo sozinhos.
+
+A `letter` e um documento de uma pagina so: o texto fica em
+`content/corpo.tex`, e todo o resto (timbre, identificacao, destinatario,
+assunto, fecho e assinatura) e montado a partir do `latexgen.config.json`.
 
 ### Metadados
 

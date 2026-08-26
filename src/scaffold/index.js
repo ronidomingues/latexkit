@@ -64,6 +64,7 @@ export async function scaffoldProject(options) {
     templateId: template.id,
     templateName: template.name,
     latexgenVersion: version,
+    documentTitle: documentTitle(metadata, template, basename(root)),
   };
 
   const fromTemplate = await copyTree(template.dir, root, {
@@ -80,10 +81,17 @@ export async function scaffoldProject(options) {
     : { added: [], kept: [] };
 
   // A variante de bibliografia e um arquivo unico com nome fixo, para que o
-  // main.tex nao precise saber qual backend esta em uso.
-  const bibTarget = join(root, 'config', 'bibliography.tex');
-  await mkdir(dirname(bibTarget), { recursive: true });
-  await copyFile(join(sharedDir, 'bib', `${bibliography}.tex`), bibTarget);
+  // main.tex nao precise saber qual backend esta em uso. Templates sem
+  // bibliografia (uma carta, por exemplo) nao recebem o arquivo: ele ficaria
+  // no projeto sem ninguem para inclui-lo.
+  /** @type {string[]} */
+  const generated = ['latexgen.config.json', 'config/metadata.tex'];
+  if (template.features.bibliography) {
+    const bibTarget = join(root, 'config', 'bibliography.tex');
+    await mkdir(dirname(bibTarget), { recursive: true });
+    await copyFile(join(sharedDir, 'bib', `${bibliography}.tex`), bibTarget);
+    generated.push('config/bibliography.tex');
+  }
 
   /** @type {import('../config.js').ProjectConfig} */
   const config = {
@@ -103,17 +111,32 @@ export async function scaffoldProject(options) {
   return {
     root,
     config,
-    written: [
-      ...fromTemplate.written,
-      ...fromShared.written,
-      'config/bibliography.tex',
-      'latexgen.config.json',
-      'config/metadata.tex',
-    ].sort(),
+    written: [...fromTemplate.written, ...fromShared.written, ...generated].sort(),
     skipped: [...fromTemplate.skipped, ...fromShared.skipped].sort(),
     merged: packageJson.added,
     conflicts: packageJson.kept,
   };
+}
+
+/**
+ * Como o documento se chama, em uma linha, para os arquivos comuns a todos
+ * os projetos (package.json, README.md, workflow do CI).
+ *
+ * Nem todo template tem um campo "title": uma carta tem remetente, assunto e
+ * destinatario. Os arquivos compartilhados so podem depender de variaveis que
+ * o scaffold garante, e esta e uma delas.
+ *
+ * @param {Record<string, string>} metadata
+ * @param {import('../templates.js').Template} template
+ * @param {string} fallback nome do diretorio, o ultimo recurso
+ * @returns {string}
+ */
+function documentTitle(metadata, template, fallback) {
+  for (const key of ['title', 'subject', 'recipient']) {
+    const value = (metadata[key] ?? '').trim();
+    if (value) return value;
+  }
+  return fallback || template.name;
 }
 
 /**

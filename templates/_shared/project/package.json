@@ -2,7 +2,7 @@
   "name": "{{projectName}}",
   "version": "1.0.0",
   "private": true,
-  "description": "{{title}}",
+  "description": "{{documentTitle}}",
   "scripts": {
     "build": "latexgen build",
     "pdf": "latexgen build",

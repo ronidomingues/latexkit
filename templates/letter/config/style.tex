@@ -1,0 +1,24 @@
+% =====================================================================
+%  Seus ajustes. Este arquivo e seu: o latexgen nunca o sobrescreve.
+%
+%  Ele e carregado DEPOIS de config/metadata.tex, entao e aqui que voce
+%  sobrescreve um metadado que precise conter LaTeX ou quebra de linha:
+%
+%    \renewcommand{\lgRecipientAddress}{Rua Exemplo, 100\\ Sao Paulo/SP}
+% =====================================================================
+
+% --- Entrelinhas -----------------------------------------------------
+% O MRPR pede espacamento simples entre linhas e um espaco entre
+% paragrafos. Para entrelinhas 1,5, troque por \onehalfspacing.
+\singlespacing
+
+% --- Recuo de paragrafo ----------------------------------------------
+% O padrao oficio recua a primeira linha em 2,5cm. Para blocos alinhados
+% a esquerda, sem recuo, use \setlength{\parindent}{0pt}.
+\setlength{\parindent}{2.5cm}
+\setlength{\parskip}{0.6em}
+
+% --- Numeracao de paginas --------------------------------------------
+% Cartas de uma pagina dispensam numeracao. Para documentos mais longos,
+% comente a linha abaixo.
+\pagestyle{empty}

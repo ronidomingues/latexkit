@@ -1,0 +1,80 @@
+% =====================================================================
+%  Livro, gerado por latexgen.
+%
+%  Baseado na classe memoir, o padrao para livros em LaTeX: controle fino
+%  de layout, paginacao frente-e-verso e indice remissivo.
+%
+%  Este arquivo e o "indice" do livro: ele so declara a classe e inclui
+%  as partes. Nao adicione texto aqui.
+%
+%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Pacotes do preambulo            -> config/packages.tex
+%    - Layout e tipografia             -> config/style.tex
+%    - Paginas de abertura             -> frontmatter/*.tex
+%    - Capitulos                       -> content/*.tex
+%    - Fechamento                      -> backmatter/*.tex
+%
+%  Compile com:  npm run build
+% =====================================================================
+
+\documentclass[
+  11pt,
+  twoside,          % frente-e-verso, o padrao de um livro impresso
+  openright,        % capitulos sempre comecam em pagina impar
+  a5paper,          % formato de livro. Use b5paper ou a4paper se preferir
+  onecolumn,
+  brazil
+]{memoir}
+
+% --- Preambulo -------------------------------------------------------
+\input{config/packages}       % pacotes e configuracoes gerais
+\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/style}          % layout, fontes e titulos (editavel)
+\input{config/docinfo}        % liga os metadados aos comandos da memoir
+\input{config/bibliography}   % backend de citacoes e referencias
+
+\makeindex
+
+\begin{document}
+
+% =====================================================================
+%  ABERTURA — numeracao em algarismos romanos
+% =====================================================================
+\frontmatter
+
+\input{frontmatter/capa}
+\input{frontmatter/creditos}
+\input{frontmatter/dedicatoria}
+
+\tableofcontents*
+\cleardoublepage
+
+\input{frontmatter/prefacio}
+
+% =====================================================================
+%  MIOLO — numeracao em algarismos arabicos, reiniciada
+% =====================================================================
+\mainmatter
+
+\part{Primeira parte}
+
+\input{content/01-primeiro-capitulo}
+\input{content/02-segundo-capitulo}
+
+\part{Segunda parte}
+
+\input{content/03-terceiro-capitulo}
+
+% =====================================================================
+%  FECHAMENTO
+% =====================================================================
+\backmatter
+
+\input{backmatter/posfacio}
+
+\lgPrintBibliography
+
+\clearpage
+\printindex
+
+\end{document}

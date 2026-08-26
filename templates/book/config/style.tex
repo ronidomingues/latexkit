@@ -1,0 +1,43 @@
+% =====================================================================
+%  Layout, tipografia e titulos. Este arquivo e seu: o latexgen nunca o
+%  sobrescreve.
+%
+%  Ele e carregado DEPOIS de config/metadata.tex, entao e aqui que voce
+%  sobrescreve um metadado que precise conter LaTeX:
+%
+%    \renewcommand{\lgTitle}{O papel do $\alpha$}
+% =====================================================================
+
+% --- Mancha de texto -------------------------------------------------
+% A memoir calcula margens equilibradas para frente-e-verso: a margem
+% interna (lombada) fica menor que a externa.
+\setlrmarginsandblock{2.2cm}{2.8cm}{*}
+\setulmarginsandblock{2.2cm}{2.6cm}{*}
+\checkandfixthelayout
+
+% --- Estilo dos titulos de capitulo ----------------------------------
+% A memoir traz varios prontos: default, section, hangnum, companion,
+% article, bianchi, bringhurst, brotherton, chappell, crosshead, culver,
+% dash, demo2, dowding, ell, ger, komalike, lyhne, madsen, ntglike,
+% pedersen, southall, tandh, thatcher, veelo, verville, wilsondob.
+\chapterstyle{bianchi}
+
+% --- Cabecalhos e rodapes --------------------------------------------
+% Titulo do capitulo na pagina par, titulo da secao na impar, numero da
+% pagina na borda externa.
+\makepagestyle{lglivro}
+\makeevenhead{lglivro}{\thepage}{}{\small\itshape\leftmark}
+\makeoddhead{lglivro}{\small\itshape\rightmark}{}{\thepage}
+\makeheadrule{lglivro}{\textwidth}{0.4pt}
+\pagestyle{lglivro}
+
+% --- Espacamento -----------------------------------------------------
+\setlength{\parindent}{1.2em}
+\nonzeroparskip
+\setlength{\parskip}{0.2em}
+
+% --- Epigrafes -------------------------------------------------------
+\setlength{\epigraphwidth}{0.55\textwidth}
+\renewcommand{\epigraphflush}{flushright}
+\renewcommand{\textflush}{flushright}
+\renewcommand{\sourceflush}{flushright}

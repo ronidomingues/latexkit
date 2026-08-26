@@ -1,0 +1,30 @@
+% =====================================================================
+%  Folha de rosto.
+%
+%  A capa de verdade (a arte externa) costuma ser feita fora do LaTeX,
+%  por um designer, e anexada depois pela editora. Esta e a folha de
+%  rosto: a primeira pagina interna do livro.
+% =====================================================================
+
+\begin{titlingpage}
+  \centering
+  \vspace*{3cm}
+
+  {\Huge\bfseries \lgTitle \par}
+
+  \lgIfSubtitle{
+    \vspace{0.8cm}
+    {\Large \lgSubtitle \par}
+  }{}
+
+  \vspace{3cm}
+  {\Large \lgAuthor \par}
+
+  \vfill
+
+  \lgIfPublisher{{\large \lgPublisher \par}}{}
+  \lgIfCity{{\large \lgCity \par}}{}
+  {\large \lgYear \par}
+
+  \vspace{1cm}
+\end{titlingpage}

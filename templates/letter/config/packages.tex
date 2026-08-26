@@ -1,0 +1,35 @@
+% =====================================================================
+%  Pacotes e layout do documento.
+% =====================================================================
+
+% --- Codificacao e idioma --------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% --- Fonte -----------------------------------------------------------
+% O padrao oficio pede uma fonte serifada em corpo 12. A Latin Modern
+% cumpre isso e existe em qualquer instalacao. Para usar a Times, que
+% alguns orgaos exigem, troque a linha abaixo por \usepackage{mathptmx}.
+\usepackage{lmodern}
+
+% --- Margens (MRPR: 3cm esquerda, 1,5cm direita) ----------------------
+\usepackage[
+  a4paper,
+  left=3cm,
+  right=1.5cm,
+  top=2.5cm,
+  bottom=2.5cm
+]{geometry}
+
+% --- Elementos graficos ----------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% --- Espacamento -----------------------------------------------------
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{indentfirst}
+
+% --- Links -----------------------------------------------------------
+\usepackage[hidelinks]{hyperref}

@@ -1,0 +1,17 @@
+% =====================================================================
+%  Liga os metadados do latexgen.config.json aos comandos da memoir.
+%
+%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  Para mudar um valor, edite latexgen.config.json.
+% =====================================================================
+
+\title{\lgTitle}
+\author{\lgAuthor}
+\date{\lgYear}
+
+\hypersetup{
+  pdftitle={\lgTitle},
+  pdfauthor={\lgAuthor},
+  pdfsubject={\lgSubtitle},
+  pdfcreator={latexgen}
+}

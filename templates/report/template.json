@@ -1,0 +1,47 @@
+{
+  "id": "report",
+  "name": "Relatorio tecnico-cientifico ABNT (NBR 10719)",
+  "description": "Relatorio de pesquisa, estagio, projeto ou consultoria: capa, folha de rosto, resumo executivo, listas, sumario, metodologia, resultados, conclusoes, recomendacoes, apendices e anexos.",
+  "documentClass": "abntex2",
+  "engine": "pdflatex",
+  "entry": "main.tex",
+  "vars": [
+    { "key": "title", "prompt": "Titulo do relatorio", "required": true },
+    { "key": "author", "prompt": "Autor ou equipe responsavel", "required": true },
+    { "key": "institution", "prompt": "Instituicao ou empresa", "required": true },
+    { "key": "unit", "prompt": "Unidade, setor ou departamento", "default": "" },
+    {
+      "key": "reportType",
+      "prompt": "Natureza (ex: Relatorio Tecnico, Relatorio de Estagio)",
+      "default": "Relatorio Tecnico"
+    },
+    { "key": "project", "prompt": "Projeto a que se refere", "default": "" },
+    { "key": "client", "prompt": "Cliente ou orgao demandante", "default": "" },
+    { "key": "supervisor", "prompt": "Responsavel tecnico", "default": "" },
+    { "key": "period", "prompt": "Periodo de referencia (ex: jan-jun de 2026)", "default": "" },
+    { "key": "city", "prompt": "Cidade", "required": true },
+    { "key": "year", "prompt": "Ano", "auto": "year" },
+    {
+      "key": "keywords",
+      "prompt": "Palavras-chave (separadas por ponto)",
+      "default": "palavra-chave. outra palavra. terceira palavra.",
+      "example": "palavra-chave. outra palavra. terceira palavra."
+    },
+    {
+      "key": "keywordsEn",
+      "prompt": "Keywords em ingles",
+      "default": "keyword. another keyword. third keyword.",
+      "example": "keyword. another keyword. third keyword."
+    }
+  ],
+  "features": { "bibliography": true, "markdown": true, "abstract": true, "figures": true },
+  "checks": [
+    "metadata",
+    "example-values",
+    "figure-caption",
+    "figure-source",
+    "orphan-citations",
+    "uncited-entries",
+    "unused-figures"
+  ]
+}

@@ -68,3 +68,28 @@ test('toPackageName produz um nome valido de pacote npm', () => {
   assert.equal(toPackageName('TCC-João'), 'tcc-joao');
   assert.equal(toPackageName('   '), 'documento-latex');
 });
+
+test('os arquivos comuns so dependem de variaveis que o scaffold garante', async () => {
+  // Nem todo template tem "title": uma carta tem remetente e assunto. Se um
+  // arquivo compartilhado usar uma chave de metadado especifica de template,
+  // o scaffold quebra no meio para os demais.
+  const { readFile } = await import('node:fs/promises');
+  const { sharedDir } = await import('../../src/paths.js');
+  const { walk } = await import('../../src/scaffold/copy.js');
+  const { join } = await import('node:path');
+
+  const guaranteed = new Set([
+    'projectName',
+    'templateId',
+    'templateName',
+    'latexgenVersion',
+    'documentTitle',
+  ]);
+
+  for (const file of await walk(join(sharedDir, 'project'))) {
+    const content = await readFile(file, 'utf8');
+    for (const [, key] of content.matchAll(/\{\{\s*([A-Za-z0-9_.-]+)\s*\}\}/g)) {
+      assert.ok(guaranteed.has(key), `${file} usa {{${key}}}, que nem todo template define`);
+    }
+  }
+});

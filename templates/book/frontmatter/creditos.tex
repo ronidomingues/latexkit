@@ -1,0 +1,43 @@
+% =====================================================================
+%  Pagina de creditos (verso da folha de rosto).
+%
+%  E onde ficam copyright, ISBN, ficha catalografica e a equipe do
+%  livro. Se o livro nao for publicado formalmente, apague o que nao se
+%  aplicar.
+% =====================================================================
+
+\thispagestyle{empty}
+\begin{SingleSpace}
+  \vspace*{\fill}
+  \noindent
+  \copyright{} \lgYear{} \lgAuthor
+
+  \vspace{0.5em}
+  \noindent
+  Todos os direitos reservados.
+
+  \lgIfPublisher{
+    \vspace{1em}
+    \noindent
+    \lgPublisher
+  }{}
+
+  \lgIfIsbn{
+    \vspace{1em}
+    \noindent
+    ISBN \lgIsbn
+  }{}
+
+  \vspace{1em}
+  \noindent
+  {\footnotesize
+    Espaco reservado a ficha catalografica, quando houver. Ela e
+    elaborada por bibliotecario e costuma ser fornecida pela editora ou
+    pela biblioteca da instituicao.
+  }
+
+  \vspace{2em}
+  \noindent
+  {\footnotesize Composto em \LaTeX{} com a classe memoir.}
+\end{SingleSpace}
+\cleardoublepage

@@ -1,0 +1,77 @@
+% =====================================================================
+%  Relatorio tecnico-cientifico segundo a ABNT (NBR 10719),
+%  gerado por latexgen.
+%
+%  Serve para relatorio de pesquisa, de estagio, de projeto, de
+%  consultoria e para relatorio tecnico de qualquer natureza.
+%
+%  Este arquivo e o "indice" do documento: ele so declara a classe e
+%  inclui as partes. Nao adicione texto aqui.
+%
+%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Pacotes do preambulo            -> config/packages.tex
+%    - Ajustes de estilo               -> config/style.tex
+%    - Elementos pre-textuais          -> pretextual/*.tex
+%    - Secoes do relatorio             -> content/*.tex
+%    - Apendices e anexos              -> postextual/*.tex
+%
+%  Compile com:  npm run build
+% =====================================================================
+
+\documentclass[
+  12pt,
+  oneside,          % relatorios circulam em PDF; para impressao: twoside
+  a4paper,
+  chapter=TITLE,
+  english,
+  brazil,
+  sumario=tradicional
+]{abntex2}
+
+% --- Preambulo -------------------------------------------------------
+\input{config/packages}
+\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/style}
+\input{config/docinfo}
+\input{config/bibliography}
+
+\begin{document}
+\selectlanguage{brazil}
+\frenchspacing
+
+% =====================================================================
+%  ELEMENTOS PRE-TEXTUAIS
+% =====================================================================
+\pretextual
+
+\imprimircapa
+\imprimirfolhaderosto
+
+\input{pretextual/resumo}
+\input{pretextual/listas}
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% =====================================================================
+%  ELEMENTOS TEXTUAIS
+% =====================================================================
+\textual
+
+\input{content/01-introducao}
+\input{content/02-desenvolvimento}
+\input{content/03-resultados}
+\input{content/04-conclusoes}
+
+% =====================================================================
+%  ELEMENTOS POS-TEXTUAIS
+% =====================================================================
+\postextual
+
+\lgPrintBibliography
+
+\input{postextual/apendices}
+\input{postextual/anexos}
+
+\end{document}

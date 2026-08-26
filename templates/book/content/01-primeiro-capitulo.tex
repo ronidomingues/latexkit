@@ -1,0 +1,54 @@
+\chapter{O primeiro capitulo}
+\label{cap:primeiro}
+
+\epigraph{Uma epigrafe ambienta o capitulo em uma frase.}{--- \textup{Autor da frase}}
+
+Este e o corpo do capitulo. Escreva em paragrafos, deixando que o LaTeX cuide da
+quebra de linhas e da paginacao.
+
+\section{Uma secao}
+\label{sec:primeira}
+
+Secoes organizam o capitulo. Termos que devem entrar no indice remissivo sao
+marcados com \verb|\index|, assim: tipografia\index{tipografia} e
+diagramacao\index{diagramacao}. O indice se monta sozinho ao fim do livro.
+
+Para citar uma obra, use \verb|\cite| \cite{knuth1984} ou, dentro da frase,
+\verb|\citeonline|, como em \citeonline{bringhurst2005}.
+
+\subsection{Uma subsecao}
+
+Ate tres niveis costumam bastar em um livro. Alem disso, o leitor se perde.
+
+\section{Figuras e tabelas}
+\label{sec:figuras-tabelas}
+
+% Exemplo de figura. Descomente depois de colocar a imagem em figures/.
+%
+% \begin{figure}[htb]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{exemplo.png}
+%   \caption{Descricao breve da figura}
+%   \label{fig:exemplo}
+%   \fonte{Elaborado pelo autor.}
+% \end{figure}
+
+\begin{table}[htb]
+  \centering
+  \caption{Uma tabela simples}
+  \label{tab:exemplo}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Item} & \textbf{Quantidade} & \textbf{Proporcao} \\
+    \midrule
+    Primeiro  & 120 & 40\% \\
+    Segundo   &  90 & 30\% \\
+    Terceiro  &  90 & 30\% \\
+    \bottomrule
+  \end{tabular}
+  \fonte{Elaborado pelo autor.}
+\end{table}
+
+\begin{quote}
+  Citacoes longas ganham um bloco proprio, recuado e sem aspas.
+\end{quote}

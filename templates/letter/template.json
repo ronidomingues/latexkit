@@ -1,0 +1,37 @@
+{
+  "id": "letter",
+  "name": "Carta ou oficio (padrao oficio)",
+  "description": "Documento oficial no padrao do Manual de Redacao da Presidencia da Republica: timbre, identificacao, destinatario, assunto, corpo com paragrafos numerados, fecho e assinatura.",
+  "documentClass": "article",
+  "engine": "pdflatex",
+  "entry": "main.tex",
+  "vars": [
+    { "key": "sender", "prompt": "Remetente (orgao, empresa ou pessoa)", "required": true },
+    { "key": "senderUnit", "prompt": "Setor ou departamento do remetente", "default": "" },
+    { "key": "logo", "prompt": "Arquivo do logotipo em figures/ (ex: logo.png)", "default": "" },
+    {
+      "key": "documentType",
+      "prompt": "Tipo do documento (ex: Oficio, Carta, Memorando)",
+      "default": "Oficio"
+    },
+    { "key": "number", "prompt": "Numero do documento (ex: 001/2026)", "default": "" },
+    { "key": "recipientTitle", "prompt": "Tratamento do destinatario (ex: A Sua Senhoria o Senhor)", "default": "" },
+    { "key": "recipient", "prompt": "Nome do destinatario", "required": true },
+    { "key": "recipientRole", "prompt": "Cargo do destinatario", "default": "" },
+    { "key": "recipientOrg", "prompt": "Instituicao do destinatario", "default": "" },
+    { "key": "recipientAddress", "prompt": "Endereco do destinatario", "default": "" },
+    { "key": "subject", "prompt": "Assunto (uma linha)", "default": "" },
+    { "key": "salutation", "prompt": "Vocativo", "default": "Senhor Diretor," },
+    {
+      "key": "closing",
+      "prompt": "Fecho (Respeitosamente para autoridade superior, Atenciosamente para as demais)",
+      "default": "Atenciosamente"
+    },
+    { "key": "signerName", "prompt": "Nome de quem assina", "required": true },
+    { "key": "signerRole", "prompt": "Cargo de quem assina", "default": "" },
+    { "key": "city", "prompt": "Cidade", "default": "" },
+    { "key": "date", "prompt": "Data por extenso (vazio usa a data da compilacao)", "default": "" }
+  ],
+  "features": { "bibliography": false, "markdown": true, "abstract": false, "figures": false },
+  "checks": ["metadata"]
+}

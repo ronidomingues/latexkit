@@ -1,0 +1,82 @@
+% =====================================================================
+%  Blocos do padrao oficio, montados a partir dos metadados.
+%
+%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lgIfAlgumaCoisa{ha valor}{esta vazio} faz cada bloco desaparecer
+%  quando o campo correspondente nao foi preenchido — e o que permite
+%  usar o mesmo template para um oficio completo e para uma carta
+%  simples, sem sobrar rotulo vazio na pagina.
+%
+%  Para mudar um valor, edite latexgen.config.json.
+%  Para mudar a aparencia, use config/style.tex.
+% =====================================================================
+
+% --- Timbre ----------------------------------------------------------
+% Logotipo (opcional) e identificacao do remetente, centralizados.
+\newcommand{\lgTimbre}{%
+  \begin{center}
+    \lgIfLogo{%
+      \includegraphics[height=1.8cm]{\lgLogo}\\[0.6em]
+    }{}%
+    {\bfseries\MakeUppercase{\lgSender}}%
+    \lgIfSenderUnit{\\ \lgSenderUnit}{}%
+  \end{center}
+  \vspace{1.5em}
+}
+
+% --- Identificacao ---------------------------------------------------
+% Tipo e numero a esquerda, local e data a direita, na mesma linha.
+\newcommand{\lgIdentificacao}{%
+  \noindent
+  \begin{minipage}[t]{0.5\textwidth}
+    \raggedright
+    \lgDocumentType\lgIfNumber{ n\textsuperscript{o} \lgNumber}{}
+  \end{minipage}%
+  \begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    % Data vazia significa "data da compilacao".
+    \lgIfCity{\lgCity, }{}\lgIfDate{\lgDate}{\today}
+  \end{minipage}
+
+  \vspace{2em}
+}
+
+% --- Destinatario ----------------------------------------------------
+% Nome, cargo e endereco, alinhados a esquerda.
+\newcommand{\lgDestinatario}{%
+  \noindent
+  \begin{minipage}{\textwidth}
+    \raggedright
+    \lgIfRecipientTitle{\lgRecipientTitle\\}{}%
+    \lgRecipient
+    \lgIfRecipientRole{\\ \lgRecipientRole}{}%
+    \lgIfRecipientOrg{\\ \lgRecipientOrg}{}%
+    \lgIfRecipientAddress{\\ \lgRecipientAddress}{}%
+  \end{minipage}
+
+  \vspace{2em}
+}
+
+% --- Assunto ---------------------------------------------------------
+% O MRPR pede o assunto em negrito, resumido em uma linha.
+\newcommand{\lgAssunto}{%
+  \lgIfSubject{%
+    \noindent\textbf{Assunto:} \lgSubject
+
+    \vspace{2em}
+  }{}%
+}
+
+% --- Fecho e assinatura ----------------------------------------------
+% "Respeitosamente" para autoridade superior, "Atenciosamente" para
+% mesma hierarquia ou inferior — a escolha esta em latexgen.config.json.
+\newcommand{\lgFecho}{%
+  \vspace{2em}
+  \noindent \lgClosing,
+
+  \vspace{3em}
+  \begin{center}
+    \lgSignerName\\
+    \lgIfSignerRole{\lgSignerRole}{}%
+  \end{center}
+}

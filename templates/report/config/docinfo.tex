@@ -1,0 +1,47 @@
+% =====================================================================
+%  Liga os metadados do latexgen.config.json aos comandos da abntex2.
+%
+%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lgIfAlgumaCoisa{ha valor}{esta vazio} omite blocos quando o campo
+%  nao foi preenchido.
+%
+%  Para mudar um valor, edite latexgen.config.json.
+% =====================================================================
+
+\titulo{\lgTitle}
+\autor{\lgAuthor}
+\local{\lgCity}
+\data{\lgYear}
+\tipotrabalho{\lgReportType}
+
+% A NBR 10719 pede a identificacao da instituicao responsavel e, quando
+% houver, da unidade e do cliente ou orgao demandante.
+\instituicao{%
+  \lgInstitution
+  \lgIfUnit{\par\lgUnit}{}%
+}
+
+% Preambulo da folha de rosto: a que o relatorio se destina.
+\preambulo{%
+  \lgReportType%
+  \lgIfProject{ referente ao projeto \lgProject}{}%
+  \lgIfClient{, elaborado para \lgClient}{}%
+  .%
+  \lgIfPeriod{\par\vspace{0.5em}Periodo de referencia: \lgPeriod.}{}%
+}
+
+% Em um relatorio, o campo "orientador" da abntex2 vira o responsavel
+% tecnico. A folha de rosto imprime o rotulo sem checar se ha nome, entao
+% o campo vazio precisa zerar tambem o rotulo — do contrario sobraria um
+% "Responsavel tecnico:" solto na pagina.
+\lgIfSupervisor{\orientador[Responsavel tecnico:]{\lgSupervisor}}{\orientador[]{}}
+
+\makeatletter
+\hypersetup{
+  pdftitle={\@title},
+  pdfauthor={\@author},
+  pdfsubject={\lgReportType},
+  pdfkeywords={\lgKeywords},
+  pdfcreator={latexgen}
+}
+\makeatother
