@@ -1,0 +1,36 @@
+name: test
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit:
+    name: Testes unitarios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm run test:unit
+
+  integration:
+    name: Compilacao dos templates
+    runs-on: ubuntu-latest
+    # A imagem traz TeX Live completo (abntex2, beamer, biblatex-abnt, biber),
+    # o que evita instalar pacotes a cada execucao e mantem o resultado igual
+    # ao que os usuarios obtem com --engine=docker.
+    container: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Compilar todos os templates
+        run: npm run test:integration
