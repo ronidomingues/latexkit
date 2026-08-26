@@ -1,0 +1,27 @@
+% =====================================================================
+%  Liga os metadados do latexgen.config.json aos comandos do beamer.
+%
+%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lgIfAlgumaCoisa{ha valor}{esta vazio} omite blocos quando o campo
+%  nao foi preenchido.
+%
+%  Para mudar um valor, edite latexgen.config.json.
+% =====================================================================
+
+% A versao curta (entre colchetes) e a que aparece no rodape; sem ela, o
+% beamer usa o titulo completo.
+\lgIfShortTitle{\title[\lgShortTitle]{\lgTitle}}{\title{\lgTitle}}
+\lgIfSubtitle{\subtitle{\lgSubtitle}}{}
+\author{\lgAuthor}
+\institute{%
+  \lgIfInstitution{\lgInstitution}{}%
+  \lgIfEvent{\\[0.3em]\small\lgEvent}{}%
+}
+% Data vazia significa "data da compilacao".
+\lgIfDate{\date{\lgDate}}{\date{\today}}
+
+\hypersetup{
+  pdftitle={\lgTitle},
+  pdfauthor={\lgAuthor},
+  pdfcreator={latexgen}
+}

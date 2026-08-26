@@ -1,0 +1,21 @@
+% =====================================================================
+%  Citacoes e referencias: abntex2cite (BibTeX)
+%
+%  Escolhido no scaffold com --bib=abntex2cite (padrao). Para trocar por
+%  biblatex/biber, gere um projeto novo com --bib=biblatex: o pipeline de
+%  compilacao muda junto com este arquivo.
+%
+%  Como citar:
+%    \cite{silva2020}         -> (SILVA, 2020)
+%    \citeonline{silva2020}   -> Silva (2020), para citacao no corpo da frase
+%    \apud{a}{b}              -> citacao de citacao
+%
+%  Estilo: [alf] = alfabetico (autor-data), o mais comum no Brasil.
+%          Troque por [num] para o sistema numerico.
+% =====================================================================
+
+\usepackage[alf]{abntex2cite}
+
+% Imprime a secao de referencias. O main.tex chama esta macro; assim os
+% dois backends de bibliografia expoem a mesma interface.
+\newcommand{\lgPrintBibliography}{\bibliography{bib/references}}

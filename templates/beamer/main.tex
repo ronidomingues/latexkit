@@ -1,0 +1,60 @@
+% =====================================================================
+%  Apresentacao em Beamer, gerada por latexgen.
+%
+%  Este arquivo e o "indice" dos slides: ele so declara a classe e inclui
+%  as partes. Nao adicione conteudo aqui.
+%
+%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Tema, cores e pacotes           -> config/packages.tex
+%    - Ajustes finos                   -> config/style.tex
+%    - Slides                          -> content/*.tex
+%    - Referencias                     -> bib/references.bib
+%
+%  Compile com:  npm run build
+% =====================================================================
+
+\documentclass[
+  aspectratio=169,  % 16:9, o formato dos projetores atuais. Use 43 para 4:3.
+  12pt,
+  brazil
+]{beamer}
+
+% Para gerar a versao impressa (sem animacoes, um slide por overlay),
+% troque a linha acima por:
+%   \documentclass[aspectratio=169,12pt,brazil,handout]{beamer}
+
+% --- Preambulo -------------------------------------------------------
+\input{config/packages}       % tema, cores e pacotes
+\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/style}          % seus ajustes (editavel)
+\input{config/docinfo}        % liga os metadados aos comandos do beamer
+\input{config/bibliography}   % backend de citacoes e referencias
+
+\begin{document}
+
+% --- Abertura --------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+% --- Conteudo --------------------------------------------------------
+\input{content/01-introducao}
+\input{content/02-desenvolvimento}
+\input{content/03-conclusao}
+
+% --- Encerramento ----------------------------------------------------
+\input{content/99-referencias}
+
+\begin{frame}[plain]
+  \centering
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}Obrigado!}
+
+  \vspace{1.5em}
+  \lgIfEmail{\texttt{\lgEmail}}{}
+\end{frame}
+
+\end{document}

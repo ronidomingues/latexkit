@@ -1,0 +1,90 @@
+% =====================================================================
+%  Tema, cores e pacotes da apresentacao.
+% =====================================================================
+
+% --- Codificacao e idioma --------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+
+% --- Elementos graficos ----------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Tema ------------------------------------------------------------
+% Partimos do tema mais neutro do beamer e montamos a identidade visual
+% aqui, em vez de depender de um tema externo: assim a apresentacao
+% compila em qualquer instalacao de TeX Live.
+\usetheme{default}
+\usecolortheme{default}
+\useinnertheme{circles}
+\setbeamertemplate{navigation symbols}{}   % remove a barra de navegacao
+\setbeamertemplate{caption}[numbered]
+
+% --- Paleta ----------------------------------------------------------
+% Troque estas tres cores para adequar a apresentacao a sua instituicao.
+\definecolor{lgPrimary}{RGB}{16, 58, 110}    % azul institucional
+\definecolor{lgAccent}{RGB}{198, 132, 24}    % destaque
+\definecolor{lgInk}{RGB}{34, 34, 34}         % texto
+
+\setbeamercolor{normal text}{fg=lgInk}
+\setbeamercolor{structure}{fg=lgPrimary}
+\setbeamercolor{title}{fg=lgPrimary}
+\setbeamercolor{frametitle}{fg=lgPrimary}
+\setbeamercolor{alerted text}{fg=lgAccent}
+\setbeamercolor{block title}{bg=lgPrimary!12, fg=lgPrimary}
+\setbeamercolor{block body}{bg=lgPrimary!5}
+\setbeamercolor{itemize item}{fg=lgAccent}
+\setbeamercolor{itemize subitem}{fg=lgAccent}
+
+% --- Tipografia dos titulos ------------------------------------------
+\setbeamerfont{title}{size=\LARGE, series=\bfseries}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamerfont{footline}{size=\scriptsize}
+
+% Titulo do slide com um filete embaixo, para separar do conteudo.
+\setbeamertemplate{frametitle}{%
+  \vspace{0.6em}%
+  \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle%
+  \vspace{0.2em}%
+  \hrule height 1pt \relax%
+}
+
+% --- Rodape ----------------------------------------------------------
+% Autor, titulo abreviado e numero do slide, discretos.
+\setbeamertemplate{footline}{%
+  \hbox{%
+    \begin{beamercolorbox}[wd=0.45\paperwidth, ht=2.4ex, dp=1.2ex, leftskip=1em]{author in head/foot}%
+      \usebeamerfont{footline}\insertshortauthor%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.45\paperwidth, ht=2.4ex, dp=1.2ex, center]{title in head/foot}%
+      \usebeamerfont{footline}\insertshorttitle%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.10\paperwidth, ht=2.4ex, dp=1.2ex, right, rightskip=1em]{date in head/foot}%
+      \usebeamerfont{footline}\insertframenumber{}/\inserttotalframenumber%
+    \end{beamercolorbox}%
+  }%
+  \vspace*{0.2em}%
+}
+\setbeamercolor{author in head/foot}{fg=lgInk!60}
+\setbeamercolor{title in head/foot}{fg=lgInk!60}
+\setbeamercolor{date in head/foot}{fg=lgInk!60}
+
+% --- Slide de secao --------------------------------------------------
+% Um slide de transicao a cada \section, para dar ritmo a apresentacao.
+\AtBeginSection[]{%
+  \begin{frame}[plain]
+    \centering
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\insertsectionhead}
+  \end{frame}
+}
+
+% --- Comandos de conveniencia ----------------------------------------
+% Fonte de uma figura ou tabela, em corpo reduzido.
+\newcommand{\fonte}[1]{%
+  \par\vspace{0.3em}{\scriptsize\color{lgInk!70}Fonte: #1}%
+}

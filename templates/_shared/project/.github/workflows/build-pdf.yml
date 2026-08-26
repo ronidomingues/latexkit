@@ -1,0 +1,45 @@
+# Compila o PDF a cada push e anexa o resultado a execucao.
+# Em tags v*, o PDF tambem e publicado na release.
+name: build-pdf
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # A imagem ja traz TeX Live completo, incluindo abntex2 e biber, o que
+    # dispensa instalar pacotes a cada execucao.
+    container: texlive/texlive:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Conferir o documento
+        run: npm run check
+
+      - name: Compilar o PDF
+        run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: {{projectName}}-pdf
+          path: out/*.pdf
+          if-no-files-found: error
+
+      - name: Publicar na release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.pdf

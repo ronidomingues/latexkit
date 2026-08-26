@@ -1,0 +1,44 @@
+{
+  "id": "article",
+  "name": "Artigo cientifico ABNT (NBR 6022)",
+  "description": "Artigo para periodico: resumo, abstract, palavras-chave, secoes numeradas, citacoes e referencias ABNT.",
+  "documentClass": "abntex2",
+  "engine": "pdflatex",
+  "entry": "main.tex",
+  "vars": [
+    { "key": "title", "prompt": "Titulo do artigo", "required": true },
+    { "key": "titleEn", "prompt": "Titulo em ingles", "default": "" },
+    { "key": "author", "prompt": "Autor", "required": true },
+    { "key": "institution", "prompt": "Instituicao", "required": true },
+    { "key": "advisor", "prompt": "Orientador", "default": "" },
+    { "key": "city", "prompt": "Cidade", "default": "" },
+    { "key": "year", "prompt": "Ano", "auto": "year" },
+    {
+      "key": "keywords",
+      "prompt": "Palavras-chave (separadas por ponto)",
+      "default": "palavra-chave. outra palavra. terceira palavra.",
+      "example": "palavra-chave. outra palavra. terceira palavra."
+    },
+    {
+      "key": "keywordsEn",
+      "prompt": "Keywords em ingles",
+      "default": "keyword. another keyword. third keyword.",
+      "example": "keyword. another keyword. third keyword."
+    }
+  ],
+  "features": {
+    "bibliography": true,
+    "markdown": true,
+    "abstract": true,
+    "figures": true
+  },
+  "checks": [
+    "metadata",
+    "example-values",
+    "figure-caption",
+    "figure-source",
+    "orphan-citations",
+    "uncited-entries",
+    "unused-figures"
+  ]
+}

@@ -1,0 +1,50 @@
+% =====================================================================
+%  Pacotes e configuracoes gerais do preambulo.
+%  Adicione aqui os pacotes que o seu artigo precisar.
+% =====================================================================
+
+% --- Codificacao e idioma --------------------------------------------
+\usepackage[T1]{fontenc}      % fontes com acentuacao correta e hifenizacao
+\usepackage[utf8]{inputenc}   % o arquivo-fonte esta em UTF-8
+\usepackage{lmodern}          % Latin Modern, versao vetorial da Computer Modern
+
+% --- Elementos graficos ----------------------------------------------
+\usepackage{graphicx}         % \includegraphics
+\graphicspath{{figures/}}     % imagens sao procuradas em figures/
+\usepackage{float}            % posicionamento [H]
+\usepackage{booktabs}         % \toprule, \midrule, \bottomrule
+\usepackage{multirow}
+\usepackage{longtable}        % tabelas que quebram entre paginas
+
+% --- Matematica ------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Tipografia ------------------------------------------------------
+\usepackage{microtype}        % ajuste fino de espacamento e protrusao
+\usepackage{indentfirst}      % recua tambem o primeiro paragrafo da secao
+\usepackage{nomencl}          % lista de simbolos
+\usepackage{color}
+\usepackage{xcolor}
+
+% --- Links -----------------------------------------------------------
+% A abntex2 ja carrega o hyperref; aqui apenas ajustamos a aparencia.
+\definecolor{lgLink}{RGB}{0,80,160}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=lgLink,
+  citecolor=lgLink,
+  urlcolor=lgLink,
+  bookmarksdepth=4
+}
+
+% --- Espacamento -----------------------------------------------------
+\setlength{\parindent}{1.3cm}     % recuo de paragrafo
+\setlength{\parskip}{0.2cm}       % espaco entre paragrafos
+\OnehalfSpacing                   % entrelinhas 1,5, como pede a ABNT
+
+% --- Comandos de conveniencia ----------------------------------------
+% A abntex2 ja fornece \fonte{...} para a fonte de figuras e tabelas,
+% exigida pela NBR 14724 logo abaixo do elemento. Use assim:
+%   \fonte{Elaborado pelo autor (2026).}
+% Adicione aqui os seus proprios comandos.

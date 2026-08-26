@@ -1,0 +1,61 @@
+{
+  "id": "beamer",
+  "name": "Apresentacao em Beamer",
+  "description": "Slides para defesa, aula ou congresso: capa institucional, roteiro, slides de secao, notas do apresentador e referencias.",
+  "documentClass": "beamer",
+  "engine": "pdflatex",
+  "entry": "main.tex",
+  "vars": [
+    {
+      "key": "title",
+      "prompt": "Titulo da apresentacao",
+      "required": true
+    },
+    {
+      "key": "shortTitle",
+      "prompt": "Titulo curto (rodape)",
+      "default": ""
+    },
+    {
+      "key": "subtitle",
+      "prompt": "Subtitulo",
+      "default": ""
+    },
+    {
+      "key": "author",
+      "prompt": "Apresentador",
+      "required": true
+    },
+    {
+      "key": "institution",
+      "prompt": "Instituicao",
+      "required": true
+    },
+    {
+      "key": "event",
+      "prompt": "Evento ou disciplina",
+      "default": ""
+    },
+    {
+      "key": "email",
+      "prompt": "E-mail de contato",
+      "default": ""
+    },
+    {
+      "key": "date",
+      "prompt": "Data (vazio usa a data da compilacao)",
+      "default": ""
+    }
+  ],
+  "features": {
+    "bibliography": true,
+    "markdown": false,
+    "abstract": false,
+    "figures": true
+  },
+  "checks": [
+    "metadata",
+    "orphan-citations",
+    "unused-figures"
+  ]
+}

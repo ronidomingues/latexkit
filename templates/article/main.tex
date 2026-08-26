@@ -1,0 +1,54 @@
+% =====================================================================
+%  Artigo cientifico segundo a ABNT (NBR 6022), gerado por latexgen.
+%
+%  Este arquivo e o "indice" do documento: ele so declara a classe e
+%  inclui as partes. Nao adicione texto aqui.
+%
+%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Pacotes do preambulo            -> config/packages.tex
+%    - Ajustes de estilo               -> config/style.tex
+%    - Texto do artigo                 -> content/*.tex
+%    - Referencias                     -> bib/references.bib
+%
+%  Compile com:  npm run build
+% =====================================================================
+
+\documentclass[
+  article,          % artigo academico (NBR 6022)
+  12pt,             % corpo do texto em 12pt, como pede a NBR 14724
+  oneside,          % impressao apenas no anverso
+  a4paper,
+  english,          % idioma secundario, para hifenizacao do abstract
+  brazil,           % o ultimo idioma listado e o principal
+  sumario=tradicional
+]{abntex2}
+
+% --- Preambulo -------------------------------------------------------
+\input{config/packages}       % pacotes e configuracoes gerais
+\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/style}          % seus ajustes de estilo (editavel)
+\input{config/docinfo}        % liga os metadados aos comandos da abntex2
+\input{config/bibliography}   % backend de citacoes e referencias
+
+\begin{document}
+\selectlanguage{brazil}
+\frenchspacing
+
+% --- Elementos pre-textuais ------------------------------------------
+\maketitle
+
+\input{content/00-resumo}
+
+% --- Elementos textuais ----------------------------------------------
+\textual
+
+\input{content/01-introducao}
+\input{content/02-desenvolvimento}
+\input{content/03-conclusao}
+
+% --- Elementos pos-textuais ------------------------------------------
+\postextual
+
+\lgPrintBibliography
+
+\end{document}

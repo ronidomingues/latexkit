@@ -1,0 +1,58 @@
+\section{Desenvolvimento}
+\label{sec:desenvolvimento}
+
+Esta e a parte principal do artigo. Divida-a em quantas secoes forem
+necessarias: referencial teorico, metodologia, resultados e discussao. Cada
+afirmacao que nao seja sua precisa vir acompanhada da fonte, como em
+\cite{exemplo2024}, e obras de referencia da area entram do mesmo modo
+\cite{knuth1984}.
+
+\subsection{Figuras}
+\label{subsec:figuras}
+
+Toda figura precisa de legenda acima e indicacao de fonte abaixo, conforme a
+NBR 14724. Coloque os arquivos de imagem em \texttt{figures/}.
+
+% Exemplo de figura. Descomente depois de colocar a imagem em figures/.
+%
+% \begin{figure}[htb]
+%   \centering
+%   \caption{Descricao breve do que a figura mostra}
+%   \label{fig:exemplo}
+%   \includegraphics[width=0.7\textwidth]{exemplo.png}
+%   \fonte{Elaborado pelo autor (2026).}
+% \end{figure}
+
+\subsection{Tabelas}
+\label{subsec:tabelas}
+
+Tabelas seguem o padrao do IBGE: sem linhas verticais e abertas nas laterais.
+
+\begin{table}[htb]
+  \centering
+  \caption{Exemplo de tabela no padrao do IBGE}
+  \label{tab:exemplo}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Categoria} & \textbf{Frequencia} & \textbf{Percentual} \\
+    \midrule
+    Primeira categoria & 120 & 40,0\% \\
+    Segunda categoria  &  90 & 30,0\% \\
+    Terceira categoria &  90 & 30,0\% \\
+    \midrule
+    Total              & 300 & 100,0\% \\
+    \bottomrule
+  \end{tabular}
+  \fonte{Elaborado pelo autor (2026).}
+\end{table}
+
+\subsection{Equacoes}
+\label{subsec:equacoes}
+
+Equacoes deslocadas do texto sao numeradas e podem ser referenciadas, como a
+Equacao~\eqref{eq:exemplo}:
+
+\begin{equation}
+  \label{eq:exemplo}
+  \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\end{equation}

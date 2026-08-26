@@ -1,0 +1,41 @@
+% =====================================================================
+%  Citacoes e referencias: biblatex + biber
+%
+%  Escolhido no scaffold com --bib=biblatex. Exige os pacotes biblatex e
+%  biblatex-abnt e o binario biber. Rode `latexgen doctor` para conferir
+%  o que falta na sua instalacao.
+%
+%  Como citar:
+%    \parencite{silva2020}    -> (SILVA, 2020)
+%    \textcite{silva2020}     -> Silva (2020), para citacao no corpo da frase
+%    \cite{silva2020}
+% =====================================================================
+
+\usepackage[
+  style=abnt,
+  backend=biber,
+  backref=false,
+  giveninits=true,
+  repeatfields=true
+]{biblatex}
+
+\addbibresource{bib/references.bib}
+
+% A abntex2cite oferece \citeonline e \apud, e sao esses os nomes que a
+% literatura brasileira usa. Reproduzimos os dois sobre os comandos do
+% biblatex para que o texto do documento nao precise saber qual backend esta
+% em uso: o mesmo content/*.tex compila com abntex2cite e com biblatex.
+%
+% O par \providecommand + \renewcommand cobre os dois casos: a classe abntex2
+% ja define \apud, e redefinir o que existe exige \renewcommand; o beamer nao
+% define nenhum dos dois, e ai o \providecommand cria o nome antes.
+\providecommand{\citeonline}{}
+\renewcommand{\citeonline}[2][]{\textcite[#1]{#2}}
+\providecommand{\apud}{}
+\renewcommand{\apud}[2]{\parencite{#1} apud \parencite{#2}}
+
+% Imprime a secao de referencias. O main.tex chama esta macro; assim os
+% dois backends de bibliografia expoem a mesma interface.
+\newcommand{\lgPrintBibliography}{%
+  \printbibliography[title=REFER\^ENCIAS]%
+}
