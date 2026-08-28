@@ -1,8 +1,11 @@
 # Saida da compilacao (o PDF final fica em out/)
 out/
 
-# Estado local do latexgen (cache de deteccao de motor)
-.latexgen/
+# Cache de deteccao de motor: especifico desta maquina.
+# O .latexgen/manifest.json, ao contrario, e propriedade do projeto e deve
+# ser versionado — e o que permite ao `latexgen upgrade` saber quais arquivos
+# vieram do template e continuam intocados.
+.latexgen/engine.json
 
 # Auxiliares do LaTeX, caso algum escape do out/
 *.aux

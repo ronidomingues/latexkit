@@ -21,6 +21,9 @@ const BASE_OPTIONS = /** @type {const} */ ({
   redetect: { type: 'boolean' },
   all: { type: 'boolean' },
   fix: { type: 'boolean' },
+  force: { type: 'boolean' },
+  'dry-run': { type: 'boolean' },
+  'clean-pending': { type: 'boolean' },
 });
 
 /**
@@ -95,6 +98,11 @@ export async function runCli(argv, options) {
       const { check } = await import('./commands/check.js');
       return check();
     }
+    case 'upgrade': {
+      const { upgrade, cleanPending } = await import('./commands/upgrade.js');
+      if (values['clean-pending']) return cleanPending();
+      return upgrade({ dryRun: Boolean(values['dry-run']), force: Boolean(values.force) });
+    }
     case 'doctor': {
       const { doctor } = await import('./commands/doctor.js');
       return doctor();
@@ -108,7 +116,7 @@ export async function runCli(argv, options) {
       return printHelp(rest[0]);
     default:
       throw new UserError(`Comando desconhecido: "${command}".`, [
-        'Comandos: new, init, build, watch, clean, check, doctor, list',
+        'Comandos: new, init, build, watch, clean, check, upgrade, doctor, list',
         'Ajuda completa: latexgen --help',
       ]);
   }
@@ -144,6 +152,7 @@ ${color.bold('COMANDOS')}
   ${color.cyan('watch')}                    recompila a cada alteracao
   ${color.cyan('check')}                    confere metadados, figuras e citacoes
   ${color.cyan('clean')}                    remove os arquivos gerados
+  ${color.cyan('upgrade')}                  traz melhorias do template sem tocar no seu texto
   ${color.cyan('doctor')}                   mostra o que esta instalado na maquina
   ${color.cyan('list')}                     lista os templates disponiveis
 
@@ -157,6 +166,9 @@ ${color.bold('OPCOES')}
   --verbose           mostra a saida bruta do LaTeX
   -y, --yes           aceita os padroes sem perguntar
   --all               no clean, remove tambem o cache de deteccao
+  --dry-run           no upgrade, mostra o que mudaria sem escrever nada
+  --force             no upgrade, trata todo arquivo como editado (nada e sobrescrito)
+  --clean-pending     no upgrade, apaga os arquivos .new de uma execucao anterior
   -h, --help          esta ajuda
   -v, --version       versao do latexgen
 

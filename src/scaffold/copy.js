@@ -49,12 +49,7 @@ export async function copyTree(from, to, options = {}) {
   /** @type {CopyResult} */
   const result = { written: [], skipped: [] };
 
-  for (const source of await walk(from)) {
-    const rel = relative(from, source);
-    const target = applyRenames(rel);
-
-    if (filter && !filter(target)) continue;
-
+  for (const { source, target } of await planFiles(from, { filter })) {
     const destination = join(to, target);
     if (!overwrite && existsSync(destination)) {
       result.skipped.push(target);
@@ -73,6 +68,32 @@ export async function copyTree(from, to, options = {}) {
   }
 
   return result;
+}
+
+/**
+ * O que uma arvore de template produziria, sem escrever nada.
+ *
+ * A copia e o `upgrade` precisam concordar exatamente sobre quais arquivos o
+ * template gerencia e sob que nome. Derivar os dois do mesmo lugar evita que
+ * uma renomeacao futura (como `gitignore` -> `.gitignore`) valha para um e
+ * nao para o outro.
+ *
+ * @param {string} from diretorio de origem
+ * @param {{ filter?: (relativePath: string) => boolean }} [options]
+ * @returns {Promise<Array<{ source: string, target: string }>>} origem absoluta e destino relativo
+ */
+export async function planFiles(from, options = {}) {
+  const { filter } = options;
+  /** @type {Array<{ source: string, target: string }>} */
+  const files = [];
+
+  for (const source of await walk(from)) {
+    const target = applyRenames(relative(from, source));
+    if (filter && !filter(target)) continue;
+    files.push({ source, target });
+  }
+
+  return files;
 }
 
 /**

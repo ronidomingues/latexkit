@@ -53,6 +53,7 @@ mostrando como usar figuras, tabelas, equacoes e citacoes.
 | `latexgen watch` | recompila a cada arquivo salvo |
 | `latexgen check` | confere metadados, figuras e citacoes |
 | `latexgen clean` | remove os arquivos gerados |
+| `latexgen upgrade` | traz melhorias do template sem tocar no seu texto |
 | `latexgen doctor` | mostra o que esta instalado e qual motor seria usado |
 | `latexgen list` | lista os templates |
 
@@ -197,6 +198,48 @@ Um lint para os esquecimentos que custam caro numa banca:
 - imagens em `figures/` que nenhum `\includegraphics` usa
 
 Erros derrubam o comando; avisos nao. Isso o torna utilizavel como porta no CI.
+
+## `latexgen upgrade`
+
+Quando sai uma versao nova do latexgen, o `upgrade` traz as correcoes do
+template para um projeto que ja existe — sem tocar em uma linha do que voce
+escreveu.
+
+```bash
+npm update latexgen
+npx latexgen upgrade --dry-run   # o que mudaria
+npx latexgen upgrade             # aplica
+```
+
+A decisao e por arquivo, e se apoia no `.latexgen/manifest.json` gravado
+quando o projeto foi criado:
+
+| Situacao do arquivo | O que acontece |
+| --- | --- |
+| igual a como o template entregou | recebe a versao nova |
+| novo no template | e criado |
+| voce editou (`config/`, `main.tex`, CI) | fica como esta; a versao nova vai para `<arquivo>.new` |
+| voce editou (`content/`, `bib/`, `figures/`) | fica como esta, e so |
+
+A distincao da ultima linha e proposital: um `.new` ao lado da sua introducao
+conteria apenas o texto-exemplo do template, que voce ja substituiu de
+proposito.
+
+Compare o que interessar e limpe depois:
+
+```bash
+diff config/packages.tex config/packages.tex.new
+npx latexgen upgrade --clean-pending
+```
+
+Duas garantias que o comando nunca quebra: **nada e apagado** e **nada fora do
+template e tocado**. Projetos criados antes de o manifesto existir precisam de
+`--force`, que trata todo arquivo como editado — nada e sobrescrito e tudo vai
+para `.new`.
+
+Por isso o `.latexgen/manifest.json` **deve ser versionado** (o `.gitignore`
+gerado ja cuida disso, ignorando apenas o `engine.json` ao lado, que e cache
+local da maquina).
 
 ## Integracao continua
 

@@ -14,6 +14,7 @@ import { assertUsableTarget, copyTree } from './copy.js';
 import { writeMetadata } from './metadata.js';
 import { writeConfig } from '../config.js';
 import { mergePackageJson } from './packagejson.js';
+import { hashAll, readManifest, writeManifest } from './manifest.js';
 import { UserError } from '../util/log.js';
 
 /** Arquivos do template que nao vao para o projeto do usuario. */
@@ -108,6 +109,22 @@ export async function scaffoldProject(options) {
   await writeConfig(root, config);
   await writeMetadata(root, config, template);
 
+  // Manifesto: o registro de como cada arquivo saiu daqui. E o que permite ao
+  // `upgrade` distinguir depois o encanamento intocado do texto editado.
+  //
+  // Um `init` sobre um projeto que ja tinha arquivos preserva o que existia; o
+  // manifesto precisa refletir o que esta em disco, e nao o que o template
+  // teria escrito, senao o upgrade sobrescreveria justamente esses arquivos.
+  // Como os hashes sao lidos do disco, isso sai de graca. Um manifesto
+  // anterior e preservado para os arquivos que o scaffold nao tocou agora.
+  const previous = await readManifest(root);
+  const managed = [...fromTemplate.written, ...fromTemplate.skipped, ...fromShared.written, ...fromShared.skipped, ...generated];
+  await writeManifest(root, {
+    template: template.id,
+    version,
+    files: { ...previous?.files, ...(await hashAll(root, managed)) },
+  });
+
   return {
     root,
     config,
@@ -131,7 +148,7 @@ export async function scaffoldProject(options) {
  * @param {string} fallback nome do diretorio, o ultimo recurso
  * @returns {string}
  */
-function documentTitle(metadata, template, fallback) {
+export function documentTitle(metadata, template, fallback) {
   for (const key of ['title', 'subject', 'recipient']) {
     const value = (metadata[key] ?? '').trim();
     if (value) return value;
@@ -158,7 +175,7 @@ export function toPackageName(name) {
 }
 
 /** Versao do proprio latexgen, usada no devDependencies do projeto gerado. */
-async function readPackageVersion() {
+export async function readPackageVersion() {
   try {
     const raw = await readFile(join(packageRoot, 'package.json'), 'utf8');
     return JSON.parse(raw).version ?? '0.0.0';

@@ -56,9 +56,12 @@ templates/<id>/
 │   └── style.tex        vazio ou com ajustes; o usuario edita este
 ├── content/*.tex        texto de exemplo
 ├── bib/references.bib   so com entradas que o texto realmente cita
-├── figures/.gitkeep
-└── gitignore            sem o ponto: o npm renomearia .gitignore ao empacotar
+└── figures/.gitkeep
 ```
+
+O `.gitignore`, o `package.json` e o `README.md` vem de
+`templates/_shared/project/` e valem para todo template — nao os duplique no
+seu.
 
 Nao inclua `config/metadata.tex` nem `config/bibliography.tex`: os dois sao
 gerados no scaffold. O `bibliography.tex` so aparece quando
@@ -155,6 +158,21 @@ node --test "test/integration/*.test.js"
 A suite descobre os templates sozinha: basta a pasta existir para que ela gere
 o projeto, compile o PDF com abntex2cite e com biblatex, e confira que o
 `check` passa. Nao ha nada a registrar em nenhuma lista.
+
+## 7. O que o `upgrade` fara com os seus arquivos
+
+Vale ter em mente ao decidir onde cada coisa mora, porque a regra e por
+diretorio:
+
+- `config/`, `main.tex` e o workflow do CI sao **encanamento**: se a pessoa nao
+  os editou, o upgrade os substitui pela versao nova; se editou, deixa um
+  `.new` ao lado para comparacao.
+- `content/`, `bib/`, `figures/`, `tables/`, `pretextual/`, `postextual/`,
+  `frontmatter/` e `backmatter/` sao **conteudo do usuario**: uma vez editados,
+  ficam intocados e sem `.new`.
+
+Ou seja: o que voce quer poder corrigir em versoes futuras deve ficar em
+`config/`, e nao misturado ao texto de exemplo.
 
 Antes disso, para iterar rapido no LaTeX sem passar pela CLI:
 
