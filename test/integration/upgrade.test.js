@@ -5,10 +5,10 @@
  * template sem tocar em uma linha do que a pessoa escreveu. Cada teste aqui
  * fixa um lado dessa promessa.
  *
- * Para simular uma versao mais nova do latexgen, o pacote e copiado para um
+ * Para simular uma versao mais nova do latexkit, o pacote e copiado para um
  * diretorio temporario, a versao no package.json e elevada e os templates da
  * copia sao alterados. A CLI dessa copia e quem roda o upgrade — e o mesmo
- * que aconteceria com um `npm update latexgen` de verdade.
+ * que aconteceria com um `npm update latexkit` de verdade.
  */
 
 import { test, describe } from 'node:test';
@@ -22,7 +22,7 @@ import { packageRoot } from '../../src/paths.js';
 import { tempDir } from '../helpers/tmp.js';
 
 const run = promisify(execFile);
-const CLI = join(packageRoot, 'bin', 'latexgen.js');
+const CLI = join(packageRoot, 'bin', 'latexkit.js');
 const TIMEOUT = 300_000;
 
 const BASE = [
@@ -37,7 +37,7 @@ const BASE = [
  * @param {string[]} args
  * @param {string} [cwd]
  */
-function latexgen(cli, args, cwd) {
+function latexkit(cli, args, cwd) {
   return run(process.execPath, [cli, ...args], { cwd, timeout: TIMEOUT, encoding: 'utf8' });
 }
 
@@ -48,7 +48,7 @@ function latexgen(cli, args, cwd) {
  * @returns {Promise<string>} caminho do bin da "versao nova"
  */
 async function newerRelease(t) {
-  const dir = join(await tempDir(t), 'latexgen-0.2.0');
+  const dir = join(await tempDir(t), 'latexkit-0.2.0');
   await mkdir(dir, { recursive: true });
 
   // So o necessario para rodar: copiar node_modules seria lento e inutil,
@@ -67,7 +67,7 @@ async function newerRelease(t) {
   await appendFile(join(dir, 'templates/article/config/packages.tex'), '\n% outra melhoria\n');
   await writeFile(join(dir, 'templates/article/content/09-novo.tex'), '% arquivo novo do template\n');
 
-  return join(dir, 'bin', 'latexgen.js');
+  return join(dir, 'bin', 'latexkit.js');
 }
 
 /**
@@ -78,7 +78,7 @@ async function newerRelease(t) {
  */
 async function editedProject(t) {
   const dir = join(await tempDir(t), 'projeto');
-  await latexgen(CLI, ['new', 'article', dir, '--yes', ...BASE]);
+  await latexkit(CLI, ['new', 'article', dir, '--yes', ...BASE]);
 
   await appendFile(join(dir, 'config/packages.tex'), '\\usepackage{siunitx}\n');
   await appendFile(join(dir, 'config/style.tex'), '% ajuste meu\n');
@@ -90,7 +90,7 @@ async function editedProject(t) {
 describe('upgrade', () => {
   test('na mesma versao, nao faz nada', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
-    const { stdout } = await latexgen(CLI, ['upgrade'], dir);
+    const { stdout } = await latexkit(CLI, ['upgrade'], dir);
     assert.match(stdout, /ja esta na versao/);
   });
 
@@ -99,7 +99,7 @@ describe('upgrade', () => {
     const newer = await newerRelease(t);
 
     const before = await readFile(join(dir, 'config/packages.tex'), 'utf8');
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
 
     // Intocado pelo usuario: recebe a melhoria.
     const docinfo = await readFile(join(dir, 'config/docinfo.tex'), 'utf8');
@@ -121,7 +121,7 @@ describe('upgrade', () => {
   test('conteudo do usuario nao ganha .new: nao ha o que comparar', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
 
     const intro = await readFile(join(dir, 'content/01-introducao.tex'), 'utf8');
     assert.match(intro, /Texto que eu escrevi/);
@@ -136,7 +136,7 @@ describe('upgrade', () => {
     const newer = await newerRelease(t);
 
     const before = await readFile(join(dir, 'config/docinfo.tex'), 'utf8');
-    const { stdout } = await latexgen(newer, ['upgrade', '--dry-run'], dir);
+    const { stdout } = await latexkit(newer, ['upgrade', '--dry-run'], dir);
 
     assert.match(stdout, /Simulacao/);
     assert.equal(await readFile(join(dir, 'config/docinfo.tex'), 'utf8'), before);
@@ -147,24 +147,24 @@ describe('upgrade', () => {
   test('o manifesto e a config passam a registrar a nova versao', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
 
-    const manifest = JSON.parse(await readFile(join(dir, '.latexgen/manifest.json'), 'utf8'));
-    const config = JSON.parse(await readFile(join(dir, 'latexgen.config.json'), 'utf8'));
+    const manifest = JSON.parse(await readFile(join(dir, '.latexkit/manifest.json'), 'utf8'));
+    const config = JSON.parse(await readFile(join(dir, 'latexkit.config.json'), 'utf8'));
     assert.equal(manifest.version, '99.0.0');
-    assert.equal(config.latexgenVersion, '99.0.0');
+    assert.equal(config.latexkitVersion, '99.0.0');
 
     // Rodar de novo nao tem mais o que fazer.
-    const { stdout } = await latexgen(newer, ['upgrade'], dir);
+    const { stdout } = await latexkit(newer, ['upgrade'], dir);
     assert.match(stdout, /ja esta na versao/);
   });
 
   test('o projeto continua compilando depois do upgrade', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
 
-    await latexgen(CLI, ['build'], dir);
+    await latexkit(CLI, ['build'], dir);
     assert.ok(existsSync(join(dir, 'out', 'main.pdf')));
   });
 
@@ -172,9 +172,9 @@ describe('upgrade', () => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
     // Projeto gerado antes de o manifesto existir.
-    await run('rm', ['-rf', join(dir, '.latexgen')]);
+    await run('rm', ['-rf', join(dir, '.latexkit')]);
 
-    await assert.rejects(latexgen(newer, ['upgrade'], dir), (cause) => {
+    await assert.rejects(latexkit(newer, ['upgrade'], dir), (cause) => {
       const failure = /** @type {{stdout?: string, stderr?: string}} */ (cause);
       assert.match(`${failure.stdout ?? ''}${failure.stderr ?? ''}`, /--force/);
       return true;
@@ -184,10 +184,10 @@ describe('upgrade', () => {
   test('com --force e sem manifesto, nada e sobrescrito', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
-    await run('rm', ['-rf', join(dir, '.latexgen')]);
+    await run('rm', ['-rf', join(dir, '.latexkit')]);
 
     const before = await readFile(join(dir, 'config/docinfo.tex'), 'utf8');
-    await latexgen(newer, ['upgrade', '--force'], dir);
+    await latexkit(newer, ['upgrade', '--force'], dir);
 
     // Sem manifesto nao ha como provar que o arquivo esta intocado, entao ele
     // e tratado como editado — a melhoria fica no .new.
@@ -198,10 +198,10 @@ describe('upgrade', () => {
   test('--clean-pending apaga os .new e nada mais', { timeout: TIMEOUT }, async (t) => {
     const dir = await editedProject(t);
     const newer = await newerRelease(t);
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
     assert.ok(existsSync(join(dir, 'config/packages.tex.new')));
 
-    await latexgen(CLI, ['upgrade', '--clean-pending'], dir);
+    await latexkit(CLI, ['upgrade', '--clean-pending'], dir);
     assert.ok(!existsSync(join(dir, 'config/packages.tex.new')));
     assert.ok(existsSync(join(dir, 'config/packages.tex')), 'o original nao pode sumir junto');
   });
@@ -215,10 +215,10 @@ describe('upgrade', () => {
     manifest.scripts.deploy = 'meu-script-de-deploy';
     await writeFile(file, JSON.stringify(manifest, null, 2), 'utf8');
 
-    await latexgen(newer, ['upgrade'], dir);
+    await latexkit(newer, ['upgrade'], dir);
 
     const after = JSON.parse(await readFile(file, 'utf8'));
     assert.equal(after.scripts.deploy, 'meu-script-de-deploy');
-    assert.equal(after.scripts.build, 'latexgen build');
+    assert.equal(after.scripts.build, 'latexkit build');
   });
 });

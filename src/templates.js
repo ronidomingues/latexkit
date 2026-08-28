@@ -74,7 +74,7 @@ export async function loadTemplate(id) {
       .sort();
     throw new UserError(`Template desconhecido: "${id}".`, [
       `Disponiveis: ${available.join(', ')}`,
-      'Veja detalhes com: latexgen list',
+      'Veja detalhes com: latexkit list',
     ]);
   }
 

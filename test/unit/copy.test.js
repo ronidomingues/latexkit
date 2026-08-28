@@ -82,7 +82,7 @@ test('os arquivos comuns so dependem de variaveis que o scaffold garante', async
     'projectName',
     'templateId',
     'templateName',
-    'latexgenVersion',
+    'latexkitVersion',
     'documentTitle',
   ]);
 

@@ -3,7 +3,7 @@
  *
  * A ordem importa: os arquivos do template vem primeiro, depois os arquivos
  * comuns a todos os projetos, e por ultimo o que e gerado (bibliografia
- * escolhida, latexgen.config.json e config/metadata.tex).
+ * escolhida, latexkit.config.json e config/metadata.tex).
  */
 
 import { mkdir, copyFile } from 'node:fs/promises';
@@ -64,7 +64,7 @@ export async function scaffoldProject(options) {
     projectName: toPackageName(basename(root)),
     templateId: template.id,
     templateName: template.name,
-    latexgenVersion: version,
+    latexkitVersion: version,
     documentTitle: documentTitle(metadata, template, basename(root)),
   };
 
@@ -86,7 +86,7 @@ export async function scaffoldProject(options) {
   // bibliografia (uma carta, por exemplo) nao recebem o arquivo: ele ficaria
   // no projeto sem ninguem para inclui-lo.
   /** @type {string[]} */
-  const generated = ['latexgen.config.json', 'config/metadata.tex'];
+  const generated = ['latexkit.config.json', 'config/metadata.tex'];
   if (template.features.bibliography) {
     const bibTarget = join(root, 'config', 'bibliography.tex');
     await mkdir(dirname(bibTarget), { recursive: true });
@@ -103,7 +103,7 @@ export async function scaffoldProject(options) {
     engine,
     outDir: 'out',
     metadata,
-    latexgenVersion: version,
+    latexkitVersion: version,
   };
 
   await writeConfig(root, config);
@@ -174,12 +174,12 @@ export function toPackageName(name) {
   return slug || 'documento-latex';
 }
 
-/** Versao do proprio latexgen, usada no devDependencies do projeto gerado. */
+/** Versao do proprio latexkit, usada no devDependencies do projeto gerado. */
 export async function readPackageVersion() {
   try {
     const raw = await readFile(join(packageRoot, 'package.json'), 'utf8');
     return JSON.parse(raw).version ?? '0.0.0';
   } catch {
-    throw new UserError('Nao foi possivel ler a versao do latexgen (package.json ausente).');
+    throw new UserError('Nao foi possivel ler a versao do latexkit (package.json ausente).');
   }
 }

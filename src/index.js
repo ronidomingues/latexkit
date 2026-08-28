@@ -1,5 +1,5 @@
 /**
- * API programatica do latexgen.
+ * API programatica do latexkit.
  *
  * Exposta para quem quiser gerar projetos a partir de um script proprio, sem
  * passar pela linha de comando.

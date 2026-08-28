@@ -94,7 +94,7 @@ export async function preflight(config, template, options = {}) {
       `  Debian/Ubuntu:  sudo apt install ${debian}`,
       `  Outros:         tlmgr install ${tlmgr}`,
       '',
-      'Ou compile em container, sem instalar nada: latexgen build --engine=docker',
+      'Ou compile em container, sem instalar nada: latexkit build --engine=docker',
     ],
   );
 }

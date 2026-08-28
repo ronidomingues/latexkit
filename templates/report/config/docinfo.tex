@@ -1,47 +1,47 @@
 % =====================================================================
-%  Liga os metadados do latexgen.config.json aos comandos da abntex2.
+%  Liga os metadados do latexkit.config.json aos comandos da abntex2.
 %
-%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
-%  \lgIfAlgumaCoisa{ha valor}{esta vazio} omite blocos quando o campo
+%  As macros \lkAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lkIfAlgumaCoisa{ha valor}{esta vazio} omite blocos quando o campo
 %  nao foi preenchido.
 %
-%  Para mudar um valor, edite latexgen.config.json.
+%  Para mudar um valor, edite latexkit.config.json.
 % =====================================================================
 
-\titulo{\lgTitle}
-\autor{\lgAuthor}
-\local{\lgCity}
-\data{\lgYear}
-\tipotrabalho{\lgReportType}
+\titulo{\lkTitle}
+\autor{\lkAuthor}
+\local{\lkCity}
+\data{\lkYear}
+\tipotrabalho{\lkReportType}
 
 % A NBR 10719 pede a identificacao da instituicao responsavel e, quando
 % houver, da unidade e do cliente ou orgao demandante.
 \instituicao{%
-  \lgInstitution
-  \lgIfUnit{\par\lgUnit}{}%
+  \lkInstitution
+  \lkIfUnit{\par\lkUnit}{}%
 }
 
 % Preambulo da folha de rosto: a que o relatorio se destina.
 \preambulo{%
-  \lgReportType%
-  \lgIfProject{ referente ao projeto \lgProject}{}%
-  \lgIfClient{, elaborado para \lgClient}{}%
+  \lkReportType%
+  \lkIfProject{ referente ao projeto \lkProject}{}%
+  \lkIfClient{, elaborado para \lkClient}{}%
   .%
-  \lgIfPeriod{\par\vspace{0.5em}Periodo de referencia: \lgPeriod.}{}%
+  \lkIfPeriod{\par\vspace{0.5em}Periodo de referencia: \lkPeriod.}{}%
 }
 
 % Em um relatorio, o campo "orientador" da abntex2 vira o responsavel
 % tecnico. A folha de rosto imprime o rotulo sem checar se ha nome, entao
 % o campo vazio precisa zerar tambem o rotulo — do contrario sobraria um
 % "Responsavel tecnico:" solto na pagina.
-\lgIfSupervisor{\orientador[Responsavel tecnico:]{\lgSupervisor}}{\orientador[]{}}
+\lkIfSupervisor{\orientador[Responsavel tecnico:]{\lkSupervisor}}{\orientador[]{}}
 
 \makeatletter
 \hypersetup{
   pdftitle={\@title},
   pdfauthor={\@author},
-  pdfsubject={\lgReportType},
-  pdfkeywords={\lgKeywords},
-  pdfcreator={latexgen}
+  pdfsubject={\lkReportType},
+  pdfkeywords={\lkKeywords},
+  pdfcreator={latexkit}
 }
 \makeatother

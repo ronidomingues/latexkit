@@ -13,5 +13,5 @@ export async function list() {
     info(`  ${' '.repeat(width)}  ${color.dim(template.description)}`);
     info('');
   }
-  info(color.dim('  Uso: latexgen new <template> <pasta>\n'));
+  info(color.dim('  Uso: latexkit new <template> <pasta>\n'));
 }

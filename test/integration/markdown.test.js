@@ -19,7 +19,7 @@ import { packageRoot } from '../../src/paths.js';
 import { tempDir } from '../helpers/tmp.js';
 
 const run = promisify(execFile);
-const CLI = join(packageRoot, 'bin', 'latexgen.js');
+const CLI = join(packageRoot, 'bin', 'latexkit.js');
 const TIMEOUT = 300_000;
 
 const BASE = [
@@ -47,7 +47,7 @@ A taxa foi de 40% no periodo, e a citacao \\cite{knuth1984} segue valendo.
  * @param {string} [cwd]
  * @param {NodeJS.ProcessEnv} [env]
  */
-function latexgen(args, cwd, env) {
+function latexkit(args, cwd, env) {
   return run(process.execPath, [CLI, ...args], {
     cwd,
     env: env ?? process.env,
@@ -64,7 +64,7 @@ function latexgen(args, cwd, env) {
  */
 async function projectWithMarkdown(t) {
   const dir = join(await tempDir(t), 'md');
-  await latexgen(['new', 'article', dir, '--yes', ...BASE]);
+  await latexkit(['new', 'article', dir, '--yes', ...BASE]);
 
   await rm(join(dir, 'content', '02-desenvolvimento.tex'));
   await writeFile(join(dir, 'content', '02-desenvolvimento.md'), MARKDOWN, 'utf8');
@@ -88,14 +88,14 @@ describe('markdown', () => {
     if (!(await which('pandoc'))) return t.skip('pandoc nao instalado nesta maquina');
 
     const dir = await projectWithMarkdown(t);
-    const { stdout } = await latexgen(['build'], dir);
+    const { stdout } = await latexkit(['build'], dir);
     assert.match(stdout, /Pandoc converteu 1/);
 
     const generated = join(dir, 'content', '02-desenvolvimento.generated.tex');
     assert.ok(existsSync(generated), 'o .tex derivado do .md nao foi gerado');
 
     const tex = await readFile(generated, 'utf8');
-    assert.match(tex, /^% GERADO por latexgen/m, 'falta a marca de arquivo gerado');
+    assert.match(tex, /^% GERADO por latexkit/m, 'falta a marca de arquivo gerado');
     // O nivel de secao importa: a classe ja define o documento, e o Pandoc nao
     // pode promover um "# titulo" a capitulo.
     assert.match(tex, /\\section\{Desenvolvimento\}/);
@@ -110,8 +110,8 @@ describe('markdown', () => {
     if (!(await which('pandoc'))) return t.skip('pandoc nao instalado nesta maquina');
 
     const dir = await projectWithMarkdown(t);
-    await latexgen(['build'], dir);
-    await latexgen(['clean'], dir);
+    await latexkit(['build'], dir);
+    await latexkit(['clean'], dir);
 
     assert.ok(!existsSync(join(dir, 'content', '02-desenvolvimento.generated.tex')));
     assert.ok(existsSync(join(dir, 'content', '02-desenvolvimento.md')), 'o clean apagou a fonte');
@@ -125,7 +125,7 @@ describe('markdown', () => {
     //
     // Os achados saem em stderr e o resumo em stdout, entao a assercao precisa
     // olhar os dois: so o stdout passaria mesmo com o aviso presente.
-    const { stdout, stderr } = await latexgen(['check'], dir);
+    const { stdout, stderr } = await latexkit(['check'], dir);
     assert.doesNotMatch(`${stdout}${stderr}`, /knuth1984/, 'o check nao enxergou a citacao no .md');
   });
 
@@ -134,7 +134,7 @@ describe('markdown', () => {
     const file = join(dir, 'content', '02-desenvolvimento.md');
     await writeFile(file, `${MARKDOWN}\nOutra: \\cite{naoexiste2030}.\n`, 'utf8');
 
-    await assert.rejects(latexgen(['check'], dir), (cause) => {
+    await assert.rejects(latexkit(['check'], dir), (cause) => {
       const failure = /** @type {{code?: number, stdout?: string, stderr?: string}} */ (cause);
       assert.equal(failure.code, 1);
       assert.match(`${failure.stdout ?? ''}${failure.stderr ?? ''}`, /naoexiste2030/);
@@ -146,10 +146,10 @@ describe('markdown', () => {
     const dir = await projectWithMarkdown(t);
 
     // PATH sem pandoc, mas com o TeX: isola a ausencia do Pandoc.
-    await assert.rejects(latexgen(['build'], dir, { ...process.env, PATH: '/usr/bin:/bin' }), () => true);
+    await assert.rejects(latexkit(['build'], dir, { ...process.env, PATH: '/usr/bin:/bin' }), () => true);
 
     const withoutPandoc = { ...process.env, PATH: '/nonexistent' };
-    await assert.rejects(latexgen(['build'], dir, withoutPandoc), (cause) => {
+    await assert.rejects(latexkit(['build'], dir, withoutPandoc), (cause) => {
       const failure = /** @type {{stdout?: string, stderr?: string}} */ (cause);
       const output = `${failure.stdout ?? ''}${failure.stderr ?? ''}`;
       assert.match(output, /02-desenvolvimento\.md/, 'o erro deveria nomear o arquivo');

@@ -76,7 +76,7 @@ export async function watch(args = {}) {
           // Arquivos gerados sao produto da propria compilacao: reagir a eles
           // criaria um laco infinito.
           if (name.includes('.generated.tex') || name.startsWith('.')) return;
-          if (dir === root && !name.endsWith('.tex') && name !== 'latexgen.config.json') return;
+          if (dir === root && !name.endsWith('.tex') && name !== 'latexkit.config.json') return;
           schedule();
         }),
       );

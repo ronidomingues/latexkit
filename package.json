@@ -1,5 +1,5 @@
 {
-  "name": "latexgen",
+  "name": "latexkit",
   "version": "0.1.0",
   "description": "Gerador de projetos LaTeX academicos e profissionais seguindo a ABNT: artigo, TCC/dissertacao/tese, relatorio tecnico, livro, slides e oficio, com compilacao para PDF em um comando.",
   "keywords": [
@@ -23,13 +23,13 @@
     "portugues",
     "brasil"
   ],
-  "homepage": "https://github.com/ronidomingues/latexgen#readme",
+  "homepage": "https://github.com/ronidomingues/latexkit#readme",
   "bugs": {
-    "url": "https://github.com/ronidomingues/latexgen/issues"
+    "url": "https://github.com/ronidomingues/latexkit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ronidomingues/latexgen.git"
+    "url": "git+https://github.com/ronidomingues/latexkit.git"
   },
   "license": "MIT",
   "author": "Ronivaldo D. Andrade",
@@ -38,7 +38,7 @@
     "node": ">=20.10.0"
   },
   "bin": {
-    "latexgen": "./bin/latexgen.js"
+    "latexkit": "./bin/latexkit.js"
   },
   "exports": {
     ".": "./src/index.js",

@@ -24,7 +24,7 @@ test('macroSuffix aceita so letras, como exige o TeX', () => {
   assert.equal(macroSuffix('sub-title'), 'SubTitle');
   assert.equal(macroSuffix('keywordsEn'), 'KeywordsEn');
   assert.equal(macroSuffix('nbr6022'), 'NbrSixZeroTwoTwo');
-  assert.match(macroName('nbr6022'), /^\\lg[A-Za-z]+$/);
+  assert.match(macroName('nbr6022'), /^\\lk[A-Za-z]+$/);
 });
 
 /** @type {Pick<import('../../src/templates.js').Template, 'id' | 'vars'>} */
@@ -39,30 +39,30 @@ const template = {
 
 test('cada chave gera a macro de valor e a condicional', () => {
   const out = renderMetadata({ metadata: { title: 'Meu Artigo', author: 'Fulano' } }, template);
-  assert.match(out, /\\newcommand\{\\lgTitle\}\{Meu Artigo\}/);
-  assert.match(out, /\\newcommand\{\\lgIfTitle\}\[2\]\{#1\}/);
+  assert.match(out, /\\newcommand\{\\lkTitle\}\{Meu Artigo\}/);
+  assert.match(out, /\\newcommand\{\\lkIfTitle\}\[2\]\{#1\}/);
 });
 
 test('campo vazio produz a condicional que executa o ramo "nao"', () => {
   const out = renderMetadata({ metadata: { title: 'x', advisor: '' } }, template);
-  assert.match(out, /\\newcommand\{\\lgAdvisor\}\{\}/);
-  assert.match(out, /\\newcommand\{\\lgIfAdvisor\}\[2\]\{#2\}/);
+  assert.match(out, /\\newcommand\{\\lkAdvisor\}\{\}/);
+  assert.match(out, /\\newcommand\{\\lkIfAdvisor\}\[2\]\{#2\}/);
 });
 
 test('campo so com espacos conta como vazio', () => {
   const out = renderMetadata({ metadata: { advisor: '   ' } }, template);
-  assert.match(out, /\\newcommand\{\\lgIfAdvisor\}\[2\]\{#2\}/);
+  assert.match(out, /\\newcommand\{\\lkIfAdvisor\}\[2\]\{#2\}/);
 });
 
 test('variavel declarada no template mas ausente do config vira macro vazia', () => {
   // Sem isso o documento quebraria com "Undefined control sequence".
   const out = renderMetadata({ metadata: {} }, template);
-  for (const macro of ['lgTitle', 'lgAdvisor', 'lgAuthor']) {
+  for (const macro of ['lkTitle', 'lkAdvisor', 'lkAuthor']) {
     assert.match(out, new RegExp(`\\\\newcommand\\{\\\\${macro}\\}`));
   }
 });
 
 test('chave presente so no config tambem vira macro', () => {
   const out = renderMetadata({ metadata: { extra: 'valor' } }, template);
-  assert.match(out, /\\newcommand\{\\lgExtra\}\{valor\}/);
+  assert.match(out, /\\newcommand\{\\lkExtra\}\{valor\}/);
 });

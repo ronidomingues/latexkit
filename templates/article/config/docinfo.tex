@@ -1,24 +1,24 @@
 % =====================================================================
-%  Liga os metadados do latexgen.config.json aos comandos da abntex2.
+%  Liga os metadados do latexkit.config.json aos comandos da abntex2.
 %
-%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
-%  \lgIfAlgumaCoisa{ha valor}{esta vazio} permite omitir blocos inteiros
+%  As macros \lkAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lkIfAlgumaCoisa{ha valor}{esta vazio} permite omitir blocos inteiros
 %  quando o campo nao foi preenchido.
 %
 %  Normalmente nao ha motivo para editar este arquivo: para mudar um
-%  valor, edite latexgen.config.json; para mudar a aparencia, use
+%  valor, edite latexkit.config.json; para mudar a aparencia, use
 %  config/style.tex.
 % =====================================================================
 
-\titulo{\lgTitle}
+\titulo{\lkTitle}
 % A NBR 6022 pede o titulo tambem em lingua estrangeira. No modo article a
 % abntex2 sempre le \theforeigntitle no \maketitle, entao este comando e
 % obrigatorio mesmo quando o campo esta vazio.
-\tituloestrangeiro{\lgTitleEn}
-\autor{\lgAuthor}
-\local{\lgCity}
-\data{\lgYear}
-\instituicao{\lgInstitution}
+\tituloestrangeiro{\lkTitleEn}
+\autor{\lkAuthor}
+\local{\lkCity}
+\data{\lkYear}
+\instituicao{\lkInstitution}
 \tipotrabalho{Artigo}
 
 % Filiacao e orientacao, impressas logo abaixo do autor.
@@ -26,8 +26,8 @@
 % no modo article a abntex2 ja usa o gancho b para o titulo estrangeiro.
 % Cada linha so aparece se o campo correspondente estiver preenchido.
 \renewcommand{\maketitlehookc}{%
-  \lgIfInstitution{\begin{center}\normalsize\lgInstitution\end{center}}{}%
-  \lgIfAdvisor{\begin{center}\normalsize Orientador: \lgAdvisor\end{center}}{}%
+  \lkIfInstitution{\begin{center}\normalsize\lkInstitution\end{center}}{}%
+  \lkIfAdvisor{\begin{center}\normalsize Orientador: \lkAdvisor\end{center}}{}%
 }
 
 % Metadados do PDF, usados por leitores e buscadores.
@@ -35,8 +35,8 @@
 \hypersetup{
   pdftitle={\@title},
   pdfauthor={\@author},
-  pdfsubject={\lgKeywords},
-  pdfkeywords={\lgKeywords},
-  pdfcreator={latexgen}
+  pdfsubject={\lkKeywords},
+  pdfkeywords={\lkKeywords},
+  pdfcreator={latexkit}
 }
 \makeatother

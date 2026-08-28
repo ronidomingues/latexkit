@@ -10,14 +10,14 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { UserError } from '../util/log.js';
 
-/** Scripts que todo projeto latexgen expoe. */
+/** Scripts que todo projeto latexkit expoe. */
 export const SCRIPTS = {
-  build: 'latexgen build',
-  pdf: 'latexgen build',
-  watch: 'latexgen watch',
-  clean: 'latexgen clean',
-  check: 'latexgen check',
-  doctor: 'latexgen doctor',
+  build: 'latexkit build',
+  pdf: 'latexkit build',
+  watch: 'latexkit watch',
+  clean: 'latexkit clean',
+  check: 'latexkit check',
+  doctor: 'latexkit doctor',
 };
 
 /**
@@ -27,7 +27,7 @@ export const SCRIPTS = {
  * o `build` de alguem seria destrutivo, e o aviso deixa o conflito visivel.
  *
  * @param {string} root
- * @param {string} version versao do latexgen, para o devDependencies
+ * @param {string} version versao do latexkit, para o devDependencies
  * @returns {Promise<{ added: string[], kept: string[] }>}
  */
 export async function mergePackageJson(root, version) {
@@ -58,11 +58,11 @@ export async function mergePackageJson(root, version) {
   }
 
   const declared =
-    manifest.dependencies?.latexgen ?? manifest.devDependencies?.latexgen ?? undefined;
+    manifest.dependencies?.latexkit ?? manifest.devDependencies?.latexkit ?? undefined;
   if (declared === undefined) {
     manifest.devDependencies ??= {};
-    manifest.devDependencies.latexgen = `^${version}`;
-    added.push('devDependencies.latexgen');
+    manifest.devDependencies.latexkit = `^${version}`;
+    added.push('devDependencies.latexkit');
   }
 
   if (added.length > 0) {

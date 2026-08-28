@@ -22,11 +22,11 @@ export const ENGINES = /** @type {const} */ (['latexmk', 'manual', 'tectonic', '
  * @property {EngineId | 'auto'} engine estrategia de compilacao; 'auto' usa a cadeia de fallback
  * @property {string} outDir diretorio de saida do PDF e auxiliares
  * @property {Record<string, string>} metadata valores das variaveis do template
- * @property {string} latexgenVersion versao que gerou o projeto
+ * @property {string} latexkitVersion versao que gerou o projeto
  */
 
 /**
- * Sobe a arvore de diretorios procurando o latexgen.config.json.
+ * Sobe a arvore de diretorios procurando o latexkit.config.json.
  *
  * @param {string} [from] diretorio inicial; por padrao o cwd
  * @returns {string | null} caminho absoluto do arquivo, ou null
@@ -52,9 +52,9 @@ export async function loadConfig(from = process.cwd()) {
   const file = findConfigFile(from);
   if (!file) {
     throw new UserError(`Nenhum ${CONFIG_FILE} encontrado a partir de ${resolve(from)}.`, [
-      'Este comando precisa ser executado dentro de um projeto latexgen.',
-      'Para criar um projeto novo:      latexgen new article meu-artigo',
-      'Para inicializar o diretorio atual: latexgen init article',
+      'Este comando precisa ser executado dentro de um projeto latexkit.',
+      'Para criar um projeto novo:      latexkit new article meu-artigo',
+      'Para inicializar o diretorio atual: latexkit init article',
     ]);
   }
 
@@ -128,7 +128,7 @@ export function normalizeConfig(raw, source = CONFIG_FILE) {
     engine,
     outDir: typeof input.outDir === 'string' && input.outDir ? input.outDir : 'out',
     metadata: cleanMetadata,
-    latexgenVersion: typeof input.latexgenVersion === 'string' ? input.latexgenVersion : '0.0.0',
+    latexkitVersion: typeof input.latexkitVersion === 'string' ? input.latexkitVersion : '0.0.0',
   };
 }
 

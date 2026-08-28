@@ -105,7 +105,7 @@ function checkMetadata(config, template) {
       level: /** @type {const} */ ('error'),
       rule: 'metadata',
       message: `Campo obrigatorio vazio: "${variable.key}" (${variable.prompt}).`,
-      file: 'latexgen.config.json',
+      file: 'latexkit.config.json',
     }));
 }
 
@@ -123,7 +123,7 @@ function checkExampleValues(config, template) {
       level: /** @type {const} */ ('warning'),
       rule: 'example-values',
       message: `"${variable.key}" ainda contem o valor de exemplo do template.`,
-      file: 'latexgen.config.json',
+      file: 'latexkit.config.json',
     }));
 }
 

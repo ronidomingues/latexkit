@@ -1,10 +1,10 @@
 % =====================================================================
-%  Artigo cientifico segundo a ABNT (NBR 6022), gerado por latexgen.
+%  Artigo cientifico segundo a ABNT (NBR 6022), gerado por latexkit.
 %
 %  Este arquivo e o "indice" do documento: ele so declara a classe e
 %  inclui as partes. Nao adicione texto aqui.
 %
-%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Metadados (titulo, autor, ...)  -> latexkit.config.json
 %    - Pacotes do preambulo            -> config/packages.tex
 %    - Ajustes de estilo               -> config/style.tex
 %    - Texto do artigo                 -> content/*.tex
@@ -25,7 +25,7 @@
 
 % --- Preambulo -------------------------------------------------------
 \input{config/packages}       % pacotes e configuracoes gerais
-\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/metadata}       % GERADO a partir do latexkit.config.json
 \input{config/style}          % seus ajustes de estilo (editavel)
 \input{config/docinfo}        % liga os metadados aos comandos da abntex2
 \input{config/bibliography}   % backend de citacoes e referencias
@@ -49,6 +49,6 @@
 % --- Elementos pos-textuais ------------------------------------------
 \postextual
 
-\lgPrintBibliography
+\lkPrintBibliography
 
 \end{document}

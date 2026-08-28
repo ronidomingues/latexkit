@@ -70,20 +70,20 @@ export async function upgrade(args = {}) {
 
   if (!manifest && !args.force) {
     throw new UserError('Este projeto nao tem manifesto: nao da para saber o que voce editou.', [
-      'O manifesto (.latexgen/manifest.json) passou a ser gravado em versoes mais',
-      'novas do latexgen. Sem ele, o upgrade nao consegue distinguir o encanamento',
+      'O manifesto (.latexkit/manifest.json) passou a ser gravado em versoes mais',
+      'novas do latexkit. Sem ele, o upgrade nao consegue distinguir o encanamento',
       'do template do texto que voce escreveu.',
       '',
       'Com --force, todo arquivo do template e tratado como editado: nada e',
       'sobrescrito e as versoes novas ficam ao lado, com sufixo .new, para voce',
       'comparar uma a uma.',
       '',
-      '  latexgen upgrade --force',
+      '  latexkit upgrade --force',
     ]);
   }
 
   if (manifest && manifest.version === version && !args.force) {
-    success(`O projeto ja esta na versao ${version} do latexgen.`);
+    success(`O projeto ja esta na versao ${version} do latexkit.`);
     info(color.dim('  Use --force para reescrever mesmo assim.'));
     return;
   }
@@ -94,7 +94,7 @@ export async function upgrade(args = {}) {
     projectName: toPackageName(basename(root)),
     templateId: template.id,
     templateName: template.name,
-    latexgenVersion: version,
+    latexkitVersion: version,
     documentTitle: documentTitle(config.metadata, template, basename(root)),
   };
 
@@ -132,7 +132,7 @@ export async function upgrade(args = {}) {
   const merged = args.dryRun ? { added: [], kept: [] } : await mergePackageJson(root, version);
 
   if (!args.dryRun) {
-    await writeConfig(root, { ...config, latexgenVersion: version });
+    await writeConfig(root, { ...config, latexkitVersion: version });
     await writeManifest(root, { template: template.id, version, files: hashes });
   }
 
@@ -275,7 +275,7 @@ function report(results, merged, manifest, version, args) {
     info('');
     hint('Compare e traga o que interessar, por exemplo:');
     hint(`  diff ${preserved[0].target} ${preserved[0].target}${PENDING_SUFFIX}`);
-    hint('Depois apague os .new: latexgen upgrade --clean-pending');
+    hint('Depois apague os .new: latexkit upgrade --clean-pending');
     info('');
   }
 

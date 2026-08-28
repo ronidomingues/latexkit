@@ -1,6 +1,6 @@
 % =====================================================================
 %  Relatorio tecnico-cientifico segundo a ABNT (NBR 10719),
-%  gerado por latexgen.
+%  gerado por latexkit.
 %
 %  Serve para relatorio de pesquisa, de estagio, de projeto, de
 %  consultoria e para relatorio tecnico de qualquer natureza.
@@ -8,7 +8,7 @@
 %  Este arquivo e o "indice" do documento: ele so declara a classe e
 %  inclui as partes. Nao adicione texto aqui.
 %
-%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Metadados (titulo, autor, ...)  -> latexkit.config.json
 %    - Pacotes do preambulo            -> config/packages.tex
 %    - Ajustes de estilo               -> config/style.tex
 %    - Elementos pre-textuais          -> pretextual/*.tex
@@ -30,7 +30,7 @@
 
 % --- Preambulo -------------------------------------------------------
 \input{config/packages}
-\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/metadata}       % GERADO a partir do latexkit.config.json
 \input{config/style}
 \input{config/docinfo}
 \input{config/bibliography}
@@ -69,7 +69,7 @@
 % =====================================================================
 \postextual
 
-\lgPrintBibliography
+\lkPrintBibliography
 
 \input{postextual/apendices}
 \input{postextual/anexos}

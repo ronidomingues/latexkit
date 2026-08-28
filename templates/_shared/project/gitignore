@@ -2,10 +2,10 @@
 out/
 
 # Cache de deteccao de motor: especifico desta maquina.
-# O .latexgen/manifest.json, ao contrario, e propriedade do projeto e deve
-# ser versionado — e o que permite ao `latexgen upgrade` saber quais arquivos
+# O .latexkit/manifest.json, ao contrario, e propriedade do projeto e deve
+# ser versionado — e o que permite ao `latexkit upgrade` saber quais arquivos
 # vieram do template e continuam intocados.
-.latexgen/engine.json
+.latexkit/engine.json
 
 # Auxiliares do LaTeX, caso algum escape do out/
 *.aux
@@ -29,7 +29,7 @@ out/
 *.vrb
 *.xdv
 
-# .tex gerados a partir de .md pelo latexgen: a fonte e o .md
+# .tex gerados a partir de .md pelo latexkit: a fonte e o .md
 content/**/*.generated.tex
 
 node_modules/

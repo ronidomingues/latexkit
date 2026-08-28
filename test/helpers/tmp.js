@@ -11,7 +11,7 @@ import { join } from 'node:path';
  * @returns {Promise<string>}
  */
 export async function tempDir(t) {
-  const dir = await mkdtemp(join(tmpdir(), 'latexgen-test-'));
+  const dir = await mkdtemp(join(tmpdir(), 'latexkit-test-'));
   t.after(() => rm(dir, { recursive: true, force: true }));
   return dir;
 }

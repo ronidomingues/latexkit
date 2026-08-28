@@ -18,7 +18,7 @@ import { packageRoot } from '../../src/paths.js';
 import { tempDir } from '../helpers/tmp.js';
 
 const run = promisify(execFile);
-const CLI = join(packageRoot, 'bin', 'latexgen.js');
+const CLI = join(packageRoot, 'bin', 'latexkit.js');
 const TIMEOUT = 300_000;
 
 const BASE = ['--title', 'Livro com Indice', '--author', 'Autor de Teste'];
@@ -27,7 +27,7 @@ const BASE = ['--title', 'Livro com Indice', '--author', 'Autor de Teste'];
  * @param {string[]} args
  * @param {string} [cwd]
  */
-function latexgen(args, cwd) {
+function latexkit(args, cwd) {
   return run(process.execPath, [CLI, ...args], { cwd, timeout: TIMEOUT, encoding: 'utf8' });
 }
 
@@ -39,7 +39,7 @@ function latexgen(args, cwd) {
  */
 async function bookProject(t) {
   const dir = join(await tempDir(t), 'livro');
-  await latexgen(['new', 'book', dir, '--yes', ...BASE]);
+  await latexkit(['new', 'book', dir, '--yes', ...BASE]);
   return dir;
 }
 
@@ -52,7 +52,7 @@ describe('indice remissivo', () => {
       if (!(await which('makeindex'))) return t.skip('makeindex nao disponivel');
 
       const dir = await bookProject(t);
-      await latexgen(['build', `--engine=${engine}`], dir);
+      await latexkit(['build', `--engine=${engine}`], dir);
 
       const ind = join(dir, 'out', 'main.ind');
       assert.ok(existsSync(ind), `${engine} nao gerou o .ind`);
@@ -67,7 +67,7 @@ describe('indice remissivo', () => {
     if (!(await which('tectonic'))) return t.skip('tectonic nao instalado nesta maquina');
 
     const dir = await bookProject(t);
-    await assert.rejects(latexgen(['build', '--engine=tectonic'], dir), (cause) => {
+    await assert.rejects(latexkit(['build', '--engine=tectonic'], dir), (cause) => {
       const failure = /** @type {{stdout?: string, stderr?: string}} */ (cause);
       assert.match(`${failure.stdout ?? ''}${failure.stderr ?? ''}`, /indice/i);
       return true;

@@ -3,7 +3,7 @@
  *
  * A ordem e do mais rapido e leve ao mais pesado. O primeiro que estiver
  * completo (binario presente, motor TeX presente, backend de bibliografia
- * presente) vence. A escolha e guardada em .latexgen/engine.json com um
+ * presente) vence. A escolha e guardada em .latexkit/engine.json com um
  * registro do que foi encontrado; se algo mudar na maquina, a deteccao roda
  * de novo em vez de falhar com um cache velho.
  */
@@ -82,7 +82,7 @@ export async function resolveEngine(context, options = {}) {
     if (!detection.available) {
       throw new UserError(`O motor "${requested}" nao esta utilizavel: ${detection.reason}.`, [
         ...installHints(requested),
-        'Ou deixe o latexgen escolher: remova --engine (ou use engine="auto").',
+        'Ou deixe o latexkit escolher: remova --engine (ou use engine="auto").',
       ]);
     }
     return { engine, source: 'requested' };
@@ -166,7 +166,7 @@ async function writeCache(root, engine) {
     await mkdir(join(root, STATE_DIR), { recursive: true });
     await writeFile(
       join(root, CACHE_FILE),
-      `${JSON.stringify({ engine, note: 'Cache do latexgen. Apague para forcar nova deteccao.' }, null, 2)}\n`,
+      `${JSON.stringify({ engine, note: 'Cache do latexkit. Apague para forcar nova deteccao.' }, null, 2)}\n`,
       'utf8',
     );
   } catch {

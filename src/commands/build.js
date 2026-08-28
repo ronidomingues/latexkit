@@ -2,7 +2,7 @@
  * Comando `build`: regenera o que e derivado e compila o PDF.
  *
  * A sequencia e sempre a mesma — metadados, Markdown, compilacao — para que o
- * PDF nunca fique fora de sincronia com o latexgen.config.json.
+ * PDF nunca fique fora de sincronia com o latexkit.config.json.
  */
 
 import { existsSync } from 'node:fs';
@@ -36,7 +36,7 @@ export async function build(args = {}) {
   if (!existsSync(join(root, config.entry))) {
     throw new UserError(`Arquivo principal nao encontrado: ${config.entry}`, [
       `Esperado em ${root}`,
-      'Confira o campo "entry" do latexgen.config.json.',
+      'Confira o campo "entry" do latexkit.config.json.',
     ]);
   }
 
@@ -86,7 +86,7 @@ export async function build(args = {}) {
       ...(await summarizeLog(log, result)),
       '',
       `Log completo: ${relative(process.cwd(), log)}`,
-      'Para ver a saida bruta do LaTeX: latexgen build --verbose',
+      'Para ver a saida bruta do LaTeX: latexkit build --verbose',
     ]);
   }
 

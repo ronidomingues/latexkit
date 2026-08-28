@@ -2,7 +2,7 @@
 %  Citacoes e referencias: biblatex + biber
 %
 %  Escolhido no scaffold com --bib=biblatex. Exige os pacotes biblatex e
-%  biblatex-abnt e o binario biber. Rode `latexgen doctor` para conferir
+%  biblatex-abnt e o binario biber. Rode `latexkit doctor` para conferir
 %  o que falta na sua instalacao.
 %
 %  Como citar:
@@ -36,6 +36,6 @@
 
 % Imprime a secao de referencias. O main.tex chama esta macro; assim os
 % dois backends de bibliografia expoem a mesma interface.
-\newcommand{\lgPrintBibliography}{%
+\newcommand{\lkPrintBibliography}{%
   \printbibliography[title=REFER\^ENCIAS]%
 }

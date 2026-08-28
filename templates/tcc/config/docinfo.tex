@@ -1,46 +1,46 @@
 % =====================================================================
-%  Liga os metadados do latexgen.config.json aos comandos da abntex2.
+%  Liga os metadados do latexkit.config.json aos comandos da abntex2.
 %
-%  As macros \lgAlgumaCoisa vem de config/metadata.tex, que e gerado.
-%  \lgIfAlgumaCoisa{ha valor}{esta vazio} permite omitir blocos inteiros
+%  As macros \lkAlgumaCoisa vem de config/metadata.tex, que e gerado.
+%  \lkIfAlgumaCoisa{ha valor}{esta vazio} permite omitir blocos inteiros
 %  quando o campo nao foi preenchido — e o que faz o coorientador sumir
 %  da folha de rosto quando nao existe.
 %
 %  Normalmente nao ha motivo para editar este arquivo: para mudar um
-%  valor, edite latexgen.config.json; para mudar a aparencia, use
+%  valor, edite latexkit.config.json; para mudar a aparencia, use
 %  config/style.tex.
 % =====================================================================
 
-\titulo{\lgTitle}
-\autor{\lgAuthor}
-\local{\lgCity}
-\data{\lgYear}
-\orientador{\lgAdvisor}
-\lgIfCoadvisor{\coorientador{\lgCoadvisor}}{}
-\tipotrabalho{\lgDegreeType}
+\titulo{\lkTitle}
+\autor{\lkAuthor}
+\local{\lkCity}
+\data{\lkYear}
+\orientador{\lkAdvisor}
+\lkIfCoadvisor{\coorientador{\lkCoadvisor}}{}
+\tipotrabalho{\lkDegreeType}
 
 % Instituicao: a unidade (faculdade, instituto, centro) entra em uma
 % segunda linha, quando informada.
 \instituicao{%
-  \lgInstitution
-  \lgIfUnit{\par\lgUnit}{}%
-  \lgIfCourse{\par\lgCourse}{}%
+  \lkInstitution
+  \lkIfUnit{\par\lkUnit}{}%
+  \lkIfCourse{\par\lkCourse}{}%
 }
 
 % Preambulo: o paragrafo da folha de rosto que declara a que o trabalho
 % se destina. A NBR 14724 exige a natureza do trabalho, o objetivo, o
 % nome da instituicao e a area de concentracao. Cada instituicao tem a
-% sua redacao exata — a sua esta em latexgen.config.json, no campo
+% sua redacao exata — a sua esta em latexkit.config.json, no campo
 % "preamble".
-\preambulo{\lgPreamble}
+\preambulo{\lkPreamble}
 
 % Metadados do PDF, usados por leitores e buscadores.
 \makeatletter
 \hypersetup{
   pdftitle={\@title},
   pdfauthor={\@author},
-  pdfsubject={\lgPreamble},
-  pdfkeywords={\lgKeywords},
-  pdfcreator={latexgen}
+  pdfsubject={\lkPreamble},
+  pdfkeywords={\lkKeywords},
+  pdfcreator={latexkit}
 }
 \makeatother

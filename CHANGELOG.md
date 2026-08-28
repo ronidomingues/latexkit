@@ -42,7 +42,7 @@ remissivo descarta o tectonic, que nao sabe monta-lo. A escolha fica em cache
 e e refeita sozinha quando a maquina muda.
 
 **Metadados como dados.** Titulo, autor e instituicao vivem no
-`latexgen.config.json` e chegam ao documento como macros geradas em
+`latexkit.config.json` e chegam ao documento como macros geradas em
 `config/metadata.tex`. Nenhum `.tex` de template contem placeholder, o que os
 mantem compilaveis e legiveis por si.
 
@@ -53,23 +53,23 @@ texto.
 **Markdown opcional.** Arquivos `.md` em `content/` sao convertidos por Pandoc
 durante a compilacao. Um projeto so de `.tex` nunca depende do Pandoc.
 
-**`latexgen check`.** Confere campos obrigatorios, valores de exemplo nunca
+**`latexkit check`.** Confere campos obrigatorios, valores de exemplo nunca
 trocados, figura sem legenda ou sem fonte, citacao sem entrada no `.bib`,
 entrada nunca citada e imagem nunca usada. Erros derrubam o comando, avisos
 nao, o que o torna utilizavel como porta no CI.
 
-**`latexgen upgrade`.** Traz melhorias do template para um projeto existente
+**`latexkit upgrade`.** Traz melhorias do template para um projeto existente
 sem tocar no que foi escrito, decidindo arquivo a arquivo pelo hash gravado no
-`.latexgen/manifest.json`. Nada e apagado e nada fora do template e tocado.
+`.latexkit/manifest.json`. Nada e apagado e nada fora do template e tocado.
 
 **Integracao continua.** Todo projeto gerado ja vem com um workflow que compila
 o PDF a cada push e o anexa a execucao.
 
 ### Notas
 
-- Zero dependencias de runtime: `npx latexgen` nao baixa arvore nenhuma.
+- Zero dependencias de runtime: `npx latexkit` nao baixa arvore nenhuma.
 - Node 20.10 ou mais novo. A suite unitaria roda do 20.10 ao 24 no CI.
 - Os templates foram verificados no TeX Live 2021 e no 2026.
 
-[Nao publicado]: https://github.com/ronidomingues/latexgen/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ronidomingues/latexgen/releases/tag/v0.1.0
+[Nao publicado]: https://github.com/ronidomingues/latexkit/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ronidomingues/latexkit/releases/tag/v0.1.0

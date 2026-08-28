@@ -105,6 +105,6 @@ export async function convertMarkdown(root, options = {}) {
  */
 async function prependNotice(file, source) {
   const body = await readFile(file, 'utf8');
-  const notice = `% GERADO por latexgen a partir de ${source}. Nao edite: edite o .md.\n`;
+  const notice = `% GERADO por latexkit a partir de ${source}. Nao edite: edite o .md.\n`;
   await writeFile(file, notice + body, 'utf8');
 }

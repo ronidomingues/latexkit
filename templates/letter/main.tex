@@ -1,5 +1,5 @@
 % =====================================================================
-%  Carta ou oficio, gerado por latexgen.
+%  Carta ou oficio, gerado por latexkit.
 %
 %  Segue o padrao oficio do Manual de Redacao da Presidencia da
 %  Republica (MRPR, 3a edicao), que e a referencia usada por orgaos
@@ -8,7 +8,7 @@
 %  Este arquivo e o "indice" do documento: ele so declara a classe e
 %  inclui as partes. O texto da carta fica em content/corpo.tex.
 %
-%    - Remetente, destinatario, assunto -> latexgen.config.json
+%    - Remetente, destinatario, assunto -> latexkit.config.json
 %    - Pacotes e layout                 -> config/packages.tex
 %    - Ajustes de estilo                -> config/style.tex
 %    - Texto da carta                   -> content/corpo.tex
@@ -20,19 +20,19 @@
 
 % --- Preambulo -------------------------------------------------------
 \input{config/packages}
-\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/metadata}       % GERADO a partir do latexkit.config.json
 \input{config/style}
 \input{config/docinfo}
 
 \begin{document}
 
-\lgTimbre        % cabecalho: logotipo e identificacao do remetente
-\lgIdentificacao % tipo, numero e local/data
-\lgDestinatario  % a quem se dirige
-\lgAssunto       % assunto, em negrito
+\lkTimbre        % cabecalho: logotipo e identificacao do remetente
+\lkIdentificacao % tipo, numero e local/data
+\lkDestinatario  % a quem se dirige
+\lkAssunto       % assunto, em negrito
 
 \input{content/corpo}
 
-\lgFecho         % fecho e assinatura
+\lkFecho         % fecho e assinatura
 
 \end{document}

@@ -82,7 +82,7 @@ async function reportEngines() {
   info(color.bold('\nMotores de compilacao\n'));
 
   if (!configFile) {
-    info(color.dim('  Fora de um projeto latexgen: usando pdflatex + abntex2cite como referencia.'));
+    info(color.dim('  Fora de um projeto latexkit: usando pdflatex + abntex2cite como referencia.'));
     info('');
   }
 

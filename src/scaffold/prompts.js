@@ -53,7 +53,7 @@ export async function collectMetadata(template, options = {}) {
   if (missing.length > 0) {
     throw new UserError(`Campos obrigatorios nao informados: ${missing.join(', ')}.`, [
       `Informe-os por flag, por exemplo: --${missing[0]} "..."`,
-      'Ou preencha-os depois em latexgen.config.json e rode: latexgen build',
+      'Ou preencha-os depois em latexkit.config.json e rode: latexkit build',
     ]);
   }
 

@@ -116,7 +116,7 @@ async function buildIndex(outDir, jobname, onLine) {
       'Instale-o com o restante do TeX Live:',
       '  Debian/Ubuntu:  sudo apt install texlive-binaries',
       '',
-      'Ou compile com um motor que ja o traga: latexgen build --engine=docker',
+      'Ou compile com um motor que ja o traga: latexkit build --engine=docker',
     ]);
   }
 

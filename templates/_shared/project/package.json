@@ -4,14 +4,14 @@
   "private": true,
   "description": "{{documentTitle}}",
   "scripts": {
-    "build": "latexgen build",
-    "pdf": "latexgen build",
-    "watch": "latexgen watch",
-    "clean": "latexgen clean",
-    "check": "latexgen check",
-    "doctor": "latexgen doctor"
+    "build": "latexkit build",
+    "pdf": "latexkit build",
+    "watch": "latexkit watch",
+    "clean": "latexkit clean",
+    "check": "latexkit check",
+    "doctor": "latexkit doctor"
   },
   "devDependencies": {
-    "latexgen": "^{{latexgenVersion}}"
+    "latexkit": "^{{latexkitVersion}}"
   }
 }

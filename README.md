@@ -1,19 +1,19 @@
-# latexgen
+# latexkit
 
-[![npm](https://img.shields.io/npm/v/latexgen)](https://www.npmjs.com/package/latexgen)
-[![CI](https://github.com/ronidomingues/latexgen/actions/workflows/test.yml/badge.svg)](https://github.com/ronidomingues/latexgen/actions/workflows/test.yml)
-[![node](https://img.shields.io/node/v/latexgen)](https://nodejs.org)
+[![npm](https://img.shields.io/npm/v/latexkit)](https://www.npmjs.com/package/latexkit)
+[![CI](https://github.com/ronidomingues/latexkit/actions/workflows/test.yml/badge.svg)](https://github.com/ronidomingues/latexkit/actions/workflows/test.yml)
+[![node](https://img.shields.io/node/v/latexkit)](https://nodejs.org)
 
 Projetos LaTeX academicos prontos para compilar, em um comando.
 
-O que o `create-vite` faz pelo front-end, o `latexgen` faz pelo LaTeX: gera a
+O que o `create-vite` faz pelo front-end, o `latexkit` faz pelo LaTeX: gera a
 estrutura completa de um documento — `main.tex` no papel do `index.html`, mais
 as pastas de imagens, tabelas, bibliografia e configuracao — e compila o PDF
 sem que voce precise lembrar a sequencia `pdflatex → bibtex → pdflatex →
 pdflatex`.
 
 ```bash
-npx latexgen new article meu-artigo
+npx latexkit new article meu-artigo
 cd meu-artigo
 npm install
 npm run build          # out/main.pdf
@@ -21,16 +21,16 @@ npm run build          # out/main.pdf
 
 ## Instalacao
 
-Nao precisa instalar nada: `npx latexgen` baixa e executa na hora. Para usar em
+Nao precisa instalar nada: `npx latexkit` baixa e executa na hora. Para usar em
 um projeto ja existente:
 
 ```bash
-npm install -D latexgen
-npx latexgen init article
+npm install -D latexkit
+npx latexkit init article
 ```
 
-O unico requisito real e ter LaTeX na maquina — e, se nao tiver, o `latexgen`
-compila em container com o Docker. Rode `npx latexgen doctor` para ver o que
+O unico requisito real e ter LaTeX na maquina — e, se nao tiver, o `latexkit`
+compila em container com o Docker. Rode `npx latexkit doctor` para ver o que
 existe no seu ambiente.
 
 ## Templates
@@ -51,15 +51,15 @@ mostrando como usar figuras, tabelas, equacoes e citacoes.
 
 | Comando | O que faz |
 | --- | --- |
-| `latexgen new <template> <pasta>` | cria um projeto novo |
-| `latexgen init <template>` | monta a estrutura em um diretorio existente, sem sobrescrever nada |
-| `latexgen build` | gera o PDF |
-| `latexgen watch` | recompila a cada arquivo salvo |
-| `latexgen check` | confere metadados, figuras e citacoes |
-| `latexgen clean` | remove os arquivos gerados |
-| `latexgen upgrade` | traz melhorias do template sem tocar no seu texto |
-| `latexgen doctor` | mostra o que esta instalado e qual motor seria usado |
-| `latexgen list` | lista os templates |
+| `latexkit new <template> <pasta>` | cria um projeto novo |
+| `latexkit init <template>` | monta a estrutura em um diretorio existente, sem sobrescrever nada |
+| `latexkit build` | gera o PDF |
+| `latexkit watch` | recompila a cada arquivo salvo |
+| `latexkit check` | confere metadados, figuras e citacoes |
+| `latexkit clean` | remove os arquivos gerados |
+| `latexkit upgrade` | traz melhorias do template sem tocar no seu texto |
+| `latexkit doctor` | mostra o que esta instalado e qual motor seria usado |
+| `latexkit list` | lista os templates |
 
 Todo projeto gerado ja traz esses comandos como scripts npm: `npm run build`,
 `npm run watch`, `npm run check`, `npm run clean`.
@@ -69,7 +69,7 @@ Todo projeto gerado ja traz esses comandos como scripts npm: `npm run build`,
 ```
 meu-artigo/
 ├── main.tex                 so \input: e o indice do documento
-├── latexgen.config.json     titulo, autor, instituicao, palavras-chave
+├── latexkit.config.json     titulo, autor, instituicao, palavras-chave
 ├── config/
 │   ├── metadata.tex         GERADO a partir do config — nao edite
 │   ├── packages.tex         pacotes do preambulo
@@ -114,11 +114,11 @@ alimentam o indice remissivo sozinhos.
 
 A `letter` e um documento de uma pagina so: o texto fica em
 `content/corpo.tex`, e todo o resto (timbre, identificacao, destinatario,
-assunto, fecho e assinatura) e montado a partir do `latexgen.config.json`.
+assunto, fecho e assinatura) e montado a partir do `latexkit.config.json`.
 
 ### Metadados
 
-Titulo, autor e instituicao vivem no `latexgen.config.json`, nunca no `.tex`:
+Titulo, autor e instituicao vivem no `latexkit.config.json`, nunca no `.tex`:
 
 ```json
 {
@@ -132,7 +132,7 @@ Titulo, autor e instituicao vivem no `latexgen.config.json`, nunca no `.tex`:
 ```
 
 A cada `build`, esses valores viram macros em `config/metadata.tex`
-(`\lgTitle`, `\lgAuthor`, ...), ja escapadas para LaTeX. Os templates sao
+(`\lkTitle`, `\lkAuthor`, ...), ja escapadas para LaTeX. Os templates sao
 LaTeX literal: nenhum `.tex` do template contem placeholders, o que os mantem
 compilaveis e legiveis.
 
@@ -140,10 +140,10 @@ Para usar LaTeX dentro de um valor, sobrescreva a macro em `config/style.tex`,
 que e carregado depois:
 
 ```latex
-\renewcommand{\lgTitle}{Convergencia de $\alpha$ em redes esparsas}
+\renewcommand{\lkTitle}{Convergencia de $\alpha$ em redes esparsas}
 ```
 
-## Compilacao: qual motor o latexgen usa
+## Compilacao: qual motor o latexkit usa
 
 O `build` procura um motor utilizavel, do mais rapido ao mais pesado, e usa o
 primeiro que estiver completo:
@@ -156,7 +156,7 @@ primeiro que estiver completo:
    indice remissivo, entao sai da escolha quando o documento tem um.
 4. **`docker`** — compila em `texlive/texlive`, sem nenhum LaTeX instalado.
 
-A escolha e guardada em `.latexgen/engine.json` e refeita sozinha se algo mudar
+A escolha e guardada em `.latexkit/engine.json` e refeita sozinha se algo mudar
 na maquina. Para forcar um motor: `npm run build -- --engine=docker`. Para
 refazer a deteccao: `--redetect`.
 
@@ -165,15 +165,15 @@ com `bibliography: "biblatex"` exige `biber`, e o motor que nao o tiver e
 descartado com o motivo explicito. O mesmo vale para o indice remissivo do
 `book`. A regra e sempre a mesma: um motor que produziria um documento
 incompleto e recusado com o motivo a vista, em vez de entregar o PDF errado em
-silencio. Rode `latexgen doctor` para ver a tabela.
+silencio. Rode `latexkit doctor` para ver a tabela.
 
 ## Bibliografia
 
 Duas opcoes, escolhidas no scaffold:
 
 ```bash
-npx latexgen new article tese                    # abntex2cite (padrao)
-npx latexgen new article tese --bib=biblatex     # biblatex + biber
+npx latexkit new article tese                    # abntex2cite (padrao)
+npx latexkit new article tese --bib=biblatex     # biblatex + biber
 ```
 
 Os dois backends expoem os mesmos comandos, entao o texto do documento nao
@@ -191,7 +191,7 @@ compilacao: `content/01-intro.md` gera `content/01-intro.generated.tex`, que o
 `main.tex` inclui normalmente. Markdown e opcional — um projeto so de `.tex`
 nunca depende do Pandoc.
 
-## `latexgen check`
+## `latexkit check`
 
 Um lint para os esquecimentos que custam caro numa banca:
 
@@ -203,19 +203,19 @@ Um lint para os esquecimentos que custam caro numa banca:
 
 Erros derrubam o comando; avisos nao. Isso o torna utilizavel como porta no CI.
 
-## `latexgen upgrade`
+## `latexkit upgrade`
 
-Quando sai uma versao nova do latexgen, o `upgrade` traz as correcoes do
+Quando sai uma versao nova do latexkit, o `upgrade` traz as correcoes do
 template para um projeto que ja existe — sem tocar em uma linha do que voce
 escreveu.
 
 ```bash
-npm update latexgen
-npx latexgen upgrade --dry-run   # o que mudaria
-npx latexgen upgrade             # aplica
+npm update latexkit
+npx latexkit upgrade --dry-run   # o que mudaria
+npx latexkit upgrade             # aplica
 ```
 
-A decisao e por arquivo, e se apoia no `.latexgen/manifest.json` gravado
+A decisao e por arquivo, e se apoia no `.latexkit/manifest.json` gravado
 quando o projeto foi criado:
 
 | Situacao do arquivo | O que acontece |
@@ -233,7 +233,7 @@ Compare o que interessar e limpe depois:
 
 ```bash
 diff config/packages.tex config/packages.tex.new
-npx latexgen upgrade --clean-pending
+npx latexkit upgrade --clean-pending
 ```
 
 Duas garantias que o comando nunca quebra: **nada e apagado** e **nada fora do
@@ -241,7 +241,7 @@ template e tocado**. Projetos criados antes de o manifesto existir precisam de
 `--force`, que trata todo arquivo como editado — nada e sobrescrito e tudo vai
 para `.new`.
 
-Por isso o `.latexgen/manifest.json` **deve ser versionado** (o `.gitignore`
+Por isso o `.latexkit/manifest.json` **deve ser versionado** (o `.gitignore`
 gerado ja cuida disso, ignorando apenas o `engine.json` ao lado, que e cache
 local da maquina).
 

@@ -1,10 +1,10 @@
 % =====================================================================
-%  Apresentacao em Beamer, gerada por latexgen.
+%  Apresentacao em Beamer, gerada por latexkit.
 %
 %  Este arquivo e o "indice" dos slides: ele so declara a classe e inclui
 %  as partes. Nao adicione conteudo aqui.
 %
-%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Metadados (titulo, autor, ...)  -> latexkit.config.json
 %    - Tema, cores e pacotes           -> config/packages.tex
 %    - Ajustes finos                   -> config/style.tex
 %    - Slides                          -> content/*.tex
@@ -25,7 +25,7 @@
 
 % --- Preambulo -------------------------------------------------------
 \input{config/packages}       % tema, cores e pacotes
-\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/metadata}       % GERADO a partir do latexkit.config.json
 \input{config/style}          % seus ajustes (editavel)
 \input{config/docinfo}        % liga os metadados aos comandos do beamer
 \input{config/bibliography}   % backend de citacoes e referencias
@@ -54,7 +54,7 @@
   {\usebeamerfont{title}\usebeamercolor[fg]{title}Obrigado!}
 
   \vspace{1.5em}
-  \lgIfEmail{\texttt{\lgEmail}}{}
+  \lkIfEmail{\texttt{\lkEmail}}{}
 \end{frame}
 
 \end{document}

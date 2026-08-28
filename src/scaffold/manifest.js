@@ -10,7 +10,7 @@
  * O manifesto e propriedade do projeto, nao da maquina: ele vai para o git,
  * junto com o resto. Quem clonar o repositorio consegue atualizar o template
  * do mesmo jeito. (O cache de deteccao de motor, esse sim especifico da
- * maquina, fica ao lado em .latexgen/engine.json e e ignorado pelo git.)
+ * maquina, fica ao lado em .latexkit/engine.json e e ignorado pelo git.)
  */
 
 import { createHash } from 'node:crypto';
@@ -24,7 +24,7 @@ export const MANIFEST_FILE = join(STATE_DIR, 'manifest.json');
 /**
  * @typedef {object} Manifest
  * @property {string} template id do template usado
- * @property {string} version versao do latexgen que escreveu estes arquivos
+ * @property {string} version versao do latexkit que escreveu estes arquivos
  * @property {Record<string, string>} files caminho relativo -> hash do conteudo
  */
 

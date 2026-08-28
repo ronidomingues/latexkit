@@ -42,7 +42,7 @@ export async function runCli(argv, options) {
     parsed = parseArgs({ args: argv, options: config, allowPositionals: true, strict: true });
   } catch (cause) {
     throw new UserError(cause instanceof Error ? cause.message : String(cause), [
-      'Veja as opcoes com: latexgen --help',
+      'Veja as opcoes com: latexkit --help',
     ]);
   }
 
@@ -117,7 +117,7 @@ export async function runCli(argv, options) {
     default:
       throw new UserError(`Comando desconhecido: "${command}".`, [
         'Comandos: new, init, build, watch, clean, check, upgrade, doctor, list',
-        'Ajuda completa: latexgen --help',
+        'Ajuda completa: latexkit --help',
       ]);
   }
 }
@@ -140,10 +140,10 @@ async function printHelp(topic) {
   const templates = await listTemplates();
 
   info(`
-${color.bold('latexgen')} — projetos LaTeX academicos prontos para compilar
+${color.bold('latexkit')} — projetos LaTeX academicos prontos para compilar
 
 ${color.bold('USO')}
-  latexgen <comando> [opcoes]
+  latexkit <comando> [opcoes]
 
 ${color.bold('COMANDOS')}
   ${color.cyan('new')} <template> [pasta]   cria um projeto novo
@@ -170,16 +170,16 @@ ${color.bold('OPCOES')}
   --force             no upgrade, trata todo arquivo como editado (nada e sobrescrito)
   --clean-pending     no upgrade, apaga os arquivos .new de uma execucao anterior
   -h, --help          esta ajuda
-  -v, --version       versao do latexgen
+  -v, --version       versao do latexkit
 
 ${color.bold('METADADOS')}
   Toda variavel de template vira uma flag. Por exemplo:
-  ${color.dim('latexgen new article tese --title "Meu titulo" --author "Seu nome"')}
+  ${color.dim('latexkit new article tese --title "Meu titulo" --author "Seu nome"')}
 
 ${color.bold('EXEMPLOS')}
-  ${color.dim('npx latexgen new article meu-artigo')}
-  ${color.dim('npx latexgen new beamer defesa --bib=biblatex')}
-  ${color.dim('npm i -D latexgen && npx latexgen init article')}
+  ${color.dim('npx latexkit new article meu-artigo')}
+  ${color.dim('npx latexkit new beamer defesa --bib=biblatex')}
+  ${color.dim('npm i -D latexkit && npx latexkit init article')}
   ${color.dim('npm run build')}
 `);
 

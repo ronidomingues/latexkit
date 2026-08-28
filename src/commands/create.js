@@ -30,9 +30,9 @@ export async function create(args, options) {
   const { mode } = options;
 
   if (!args.template) {
-    throw new UserError(`Informe o template: latexgen ${mode} <template>${mode === 'new' ? ' <pasta>' : ''}`, [
+    throw new UserError(`Informe o template: latexkit ${mode} <template>${mode === 'new' ? ' <pasta>' : ''}`, [
       `Disponiveis: ${(await listTemplates()).map((item) => item.id).join(', ')}`,
-      'Detalhes de cada um: latexgen list',
+      'Detalhes de cada um: latexkit list',
     ]);
   }
 
@@ -87,16 +87,16 @@ function report(result, template, mode) {
   if (result.conflicts.length > 0) {
     warn('Estes campos do package.json ja existiam e foram mantidos como estavam:');
     for (const field of result.conflicts) hint(field);
-    hint('Rode os comandos do latexgen direto, se precisar: npx latexgen build');
+    hint('Rode os comandos do latexkit direto, se precisar: npx latexkit build');
   }
 
   info('');
   step('Proximos passos:');
   if (mode === 'new') hint(`cd ${result.root}`);
-  hint('npm install       # instala o latexgen no projeto');
+  hint('npm install       # instala o latexkit no projeto');
   hint('npm run build     # gera out/main.pdf');
   info('');
-  hint('Edite o texto em content/ e os metadados em latexgen.config.json.');
+  hint('Edite o texto em content/ e os metadados em latexkit.config.json.');
 }
 
 /**

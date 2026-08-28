@@ -182,7 +182,7 @@ export async function assertUsableTarget(dir, options = {}) {
   const entries = await readdir(dir);
   if (entries.length > 0) {
     throw new UserError(`O diretorio de destino nao esta vazio: ${dir}`, [
-      'Use um caminho novo, ou entre nele e rode: latexgen init <template>',
+      'Use um caminho novo, ou entre nele e rode: latexkit init <template>',
     ]);
   }
 }

@@ -23,7 +23,7 @@ import { packageRoot } from '../../src/paths.js';
 import { tempDir } from '../helpers/tmp.js';
 
 const run = promisify(execFile);
-const CLI = join(packageRoot, 'bin', 'latexgen.js');
+const CLI = join(packageRoot, 'bin', 'latexkit.js');
 
 /** Uma compilacao completa pode passar de um minuto em maquina fria. */
 const TIMEOUT = 300_000;
@@ -69,7 +69,7 @@ function metadataArgs(template) {
  * @param {string[]} args
  * @param {string} [cwd]
  */
-function latexgen(args, cwd) {
+function latexkit(args, cwd) {
   return run(process.execPath, [CLI, ...args], { cwd, timeout: TIMEOUT, encoding: 'utf8' });
 }
 
@@ -100,10 +100,10 @@ for (const template of templates) {
         if (!available) return t.skip('sem motor LaTeX nesta maquina');
 
         const dir = join(await tempDir(t), template.id);
-        await latexgen(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
+        await latexkit(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
 
         // A estrutura precisa estar completa antes de compilar.
-        for (const file of ['main.tex', 'latexgen.config.json', 'package.json', 'README.md']) {
+        for (const file of ['main.tex', 'latexkit.config.json', 'package.json', 'README.md']) {
           assert.ok(existsSync(join(dir, file)), `faltou ${file}`);
         }
         assert.ok(existsSync(join(dir, 'config', 'metadata.tex')));
@@ -113,7 +113,7 @@ for (const template of templates) {
           'config/bibliography.tex deve existir exatamente quando o template declara bibliografia',
         );
 
-        const { stdout } = await latexgen(['build'], dir);
+        const { stdout } = await latexkit(['build'], dir);
         assert.match(stdout, /out\/main\.pdf/);
 
         const pdf = join(dir, 'out', 'main.pdf');
@@ -127,11 +127,11 @@ for (const template of templates) {
       { timeout: TIMEOUT },
       async (t) => {
         const dir = join(await tempDir(t), template.id);
-        await latexgen(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
+        await latexkit(['new', template.id, dir, '--yes', ...metadataArgs(template)]);
 
         // O check sai com codigo 1 quando ha erro; avisos nao derrubam.
         await assert.doesNotReject(
-          latexgen(['check'], dir),
+          latexkit(['check'], dir),
           'o template gerado ja nasce com erros de check',
         );
       },
@@ -145,10 +145,10 @@ for (const template of templates) {
         if (!template.features.bibliography) return t.skip('template sem bibliografia');
 
         const dir = join(await tempDir(t), `${template.id}-biblatex`);
-        await latexgen(['new', template.id, dir, '--yes', '--bib=biblatex', ...metadataArgs(template)]);
+        await latexkit(['new', template.id, dir, '--yes', '--bib=biblatex', ...metadataArgs(template)]);
 
         try {
-          await latexgen(['build'], dir);
+          await latexkit(['build'], dir);
         } catch (cause) {
           // biblatex-abnt e opcional: sem ele, o preflight avisa e o teste e
           // pulado, em vez de acusar um defeito do template.
@@ -176,7 +176,7 @@ describe('cadeia de motores', () => {
       const dir = join(await tempDir(t), 'multi-engine');
       const article = templates.find((item) => item.id === 'article');
       assert.ok(article, 'o template article deveria existir');
-      await latexgen(['new', 'article', dir, '--yes', ...metadataArgs(article)]);
+      await latexkit(['new', 'article', dir, '--yes', ...metadataArgs(article)]);
 
       const results = await detectAll({
         root: dir,
@@ -195,8 +195,8 @@ describe('cadeia de motores', () => {
       assert.ok(usable.length > 0, 'nenhum motor local disponivel');
 
       for (const id of usable) {
-        await latexgen(['clean'], dir);
-        await latexgen(['build', `--engine=${id}`], dir);
+        await latexkit(['clean'], dir);
+        await latexkit(['build', `--engine=${id}`], dir);
         assert.ok(existsSync(join(dir, 'out', 'main.pdf')), `${id} nao gerou o PDF`);
       }
     },

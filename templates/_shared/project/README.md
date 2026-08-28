@@ -1,11 +1,11 @@
 # {{documentTitle}}
 
-{{templateName}}, gerado com [latexgen](https://github.com/ronidomingues/latexgen).
+{{templateName}}, gerado com [latexkit](https://github.com/ronidomingues/latexkit).
 
 ## Comandos
 
 ```bash
-npm install        # instala o latexgen (uma vez)
+npm install        # instala o latexkit (uma vez)
 npm run build      # compila e gera out/main.pdf
 npm run watch      # recompila a cada arquivo salvo
 npm run check      # confere metadados, figuras e citacoes
@@ -19,7 +19,7 @@ O PDF final fica em `out/main.pdf`.
 
 | O que | Onde |
 | --- | --- |
-| Titulo, autor, instituicao, palavras-chave | `latexgen.config.json` |
+| Titulo, autor, instituicao, palavras-chave | `latexkit.config.json` |
 | Texto do documento | `content/*.tex` |
 | Referencias bibliograficas | `bib/references.bib` |
 | Imagens | `figures/` |
@@ -27,11 +27,11 @@ O PDF final fica em `out/main.pdf`.
 | Ajustes de estilo | `config/style.tex` |
 
 `config/metadata.tex` e gerado a cada compilacao a partir do
-`latexgen.config.json` — nao edite esse arquivo a mao. Para usar LaTeX dentro
+`latexkit.config.json` — nao edite esse arquivo a mao. Para usar LaTeX dentro
 de um metadado, sobrescreva a macro em `config/style.tex`:
 
 ```latex
-\renewcommand{\lgTitle}{Efeito do $\alpha$ na convergencia}
+\renewcommand{\lkTitle}{Efeito do $\alpha$ na convergencia}
 ```
 
 ## Escrevendo em Markdown

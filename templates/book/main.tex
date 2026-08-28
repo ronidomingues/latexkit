@@ -1,5 +1,5 @@
 % =====================================================================
-%  Livro, gerado por latexgen.
+%  Livro, gerado por latexkit.
 %
 %  Baseado na classe memoir, o padrao para livros em LaTeX: controle fino
 %  de layout, paginacao frente-e-verso e indice remissivo.
@@ -7,7 +7,7 @@
 %  Este arquivo e o "indice" do livro: ele so declara a classe e inclui
 %  as partes. Nao adicione texto aqui.
 %
-%    - Metadados (titulo, autor, ...)  -> latexgen.config.json
+%    - Metadados (titulo, autor, ...)  -> latexkit.config.json
 %    - Pacotes do preambulo            -> config/packages.tex
 %    - Layout e tipografia             -> config/style.tex
 %    - Paginas de abertura             -> frontmatter/*.tex
@@ -28,7 +28,7 @@
 
 % --- Preambulo -------------------------------------------------------
 \input{config/packages}       % pacotes e configuracoes gerais
-\input{config/metadata}       % GERADO a partir do latexgen.config.json
+\input{config/metadata}       % GERADO a partir do latexkit.config.json
 \input{config/style}          % layout, fontes e titulos (editavel)
 \input{config/docinfo}        % liga os metadados aos comandos da memoir
 \input{config/bibliography}   % backend de citacoes e referencias
@@ -72,7 +72,7 @@
 
 \input{backmatter/posfacio}
 
-\lgPrintBibliography
+\lkPrintBibliography
 
 \clearpage
 \printindex
