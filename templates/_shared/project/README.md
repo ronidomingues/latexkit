@@ -1,6 +1,6 @@
 # {{documentTitle}}
 
-{{templateName}}, gerado com [latexgen](https://github.com/ronivaldo/latexgen).
+{{templateName}}, gerado com [latexgen](https://github.com/ronidomingues/latexgen).
 
 ## Comandos
 

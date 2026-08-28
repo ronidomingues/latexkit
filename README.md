@@ -1,5 +1,9 @@
 # latexgen
 
+[![npm](https://img.shields.io/npm/v/latexgen)](https://www.npmjs.com/package/latexgen)
+[![CI](https://github.com/ronidomingues/latexgen/actions/workflows/test.yml/badge.svg)](https://github.com/ronidomingues/latexgen/actions/workflows/test.yml)
+[![node](https://img.shields.io/node/v/latexgen)](https://nodejs.org)
+
 Projetos LaTeX academicos prontos para compilar, em um comando.
 
 O que o `create-vite` faz pelo front-end, o `latexgen` faz pelo LaTeX: gera a
@@ -261,7 +265,11 @@ de Markdown; sem Tectonic, os dele. O CI roda a suite unitaria do Node 20.10
 (o minimo declarado) ao 24, e a de integracao dentro do container do TeX Live.
 
 Para adicionar um template, veja [docs/templates.md](docs/templates.md).
+Para o resto — como rodar, o que o ambiente precisa ter, como publicar —
+veja [CONTRIBUTING.md](CONTRIBUTING.md).
+
+O que mudou em cada versao esta no [CHANGELOG.md](CHANGELOG.md).
 
 ## Licenca
 
-MIT
+MIT — veja [LICENSE](LICENSE).
