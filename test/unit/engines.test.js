@@ -145,3 +145,26 @@ test('cache de um motor que sumiu da maquina e descartado', async (t) => {
   const { engine } = await resolveEngine(contextFor(root));
   assert.equal(engine.id, 'manual');
 });
+
+test('o tectonic sai da escolha quando o documento tem indice remissivo', async (t) => {
+  // O tectonic nao chama makeindex nem enxerga um .ind produzido por fora: o
+  // documento sairia com o indice vazio e sem erro. Recusar na deteccao faz a
+  // cadeia cair para o proximo motor sozinha.
+  const root = await withFakePath(t, ['tectonic']);
+  const results = await detectAll(contextFor(root, { needsIndex: true }));
+  const tectonic = results.find((item) => item.engine.id === 'tectonic');
+  assert.ok(tectonic, 'o tectonic deveria aparecer na deteccao');
+  assert.equal(tectonic.detection.available, false);
+  assert.match(/** @type {{reason: string}} */ (tectonic.detection).reason, /indice/i);
+});
+
+test('com indice e so o tectonic instalado, a cadeia acusa a falta', async (t) => {
+  const root = await withFakePath(t, ['tectonic']);
+  await assert.rejects(resolveEngine(contextFor(root, { needsIndex: true })), UserError);
+});
+
+test('sem indice, o tectonic continua elegivel', async (t) => {
+  const root = await withFakePath(t, ['tectonic']);
+  const { engine } = await resolveEngine(contextFor(root, { needsIndex: false }));
+  assert.equal(engine.id, 'tectonic');
+});

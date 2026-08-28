@@ -58,6 +58,7 @@ export async function build(args = {}) {
   await mkdir(join(root, config.outDir), { recursive: true });
 
   const context = contextFrom(root, config, {
+    needsIndex: template.features.index,
     watch: args.watch,
     onLine: args.verbose ? (line) => info(line) : undefined,
   });

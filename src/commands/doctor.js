@@ -7,6 +7,7 @@
  */
 
 import { findConfigFile, loadConfig } from '../config.js';
+import { loadTemplate } from '../templates.js';
 import { contextFrom, detectAll, installHints } from '../engines/index.js';
 import { texFileExists, which } from '../util/exec.js';
 import { color, hint, info, success, warn } from '../util/log.js';
@@ -88,7 +89,8 @@ async function reportEngines() {
   const context = configFile
     ? await (async () => {
         const { config, root } = await loadConfig();
-        return contextFrom(root, config);
+        const template = await loadTemplate(config.template);
+        return contextFrom(root, config, { needsIndex: template.features.index });
       })()
     : {
         root: process.cwd(),

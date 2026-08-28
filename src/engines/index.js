@@ -24,6 +24,7 @@ import { docker } from './docker.js';
  * @property {string} outDir diretorio de saida, relativo a raiz
  * @property {'pdflatex'|'xelatex'|'lualatex'} texEngine
  * @property {import('../config.js').Bibliography} bibliography
+ * @property {boolean} [needsIndex] o documento monta indice remissivo
  * @property {boolean} [watch] recompilar continuamente (so o latexmk suporta)
  * @property {(line: string) => void} [onLine] recebe cada linha da saida
  *

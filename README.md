@@ -147,7 +147,8 @@ primeiro que estiver completo:
    sao necessarias e quando rodar bibtex, biber e makeindex.
 2. **`manual`** — `pdflatex` + `bibtex` chamados direto, quando ha TeX mas nao
    ha latexmk.
-3. **`tectonic`** — binario unico que baixa os pacotes sob demanda.
+3. **`tectonic`** — binario unico que baixa os pacotes sob demanda. Nao monta
+   indice remissivo, entao sai da escolha quando o documento tem um.
 4. **`docker`** — compila em `texlive/texlive`, sem nenhum LaTeX instalado.
 
 A escolha e guardada em `.latexgen/engine.json` e refeita sozinha se algo mudar
@@ -156,7 +157,10 @@ refazer a deteccao: `--redetect`.
 
 A sondagem confere o toolchain inteiro, nao so o binario principal: um projeto
 com `bibliography: "biblatex"` exige `biber`, e o motor que nao o tiver e
-descartado com o motivo explicito.
+descartado com o motivo explicito. O mesmo vale para o indice remissivo do
+`book`. A regra e sempre a mesma: um motor que produziria um documento
+incompleto e recusado com o motivo a vista, em vez de entregar o PDF errado em
+silencio. Rode `latexgen doctor` para ver a tabela.
 
 ## Bibliografia
 
@@ -208,6 +212,10 @@ npm run test:unit          # rapido, sem LaTeX
 npm run test:integration   # gera e compila cada template de verdade
 npm run typecheck
 ```
+
+Os testes de integracao pulam sozinhos o que a maquina nao tem: sem Pandoc, os
+de Markdown; sem Tectonic, os dele. O CI roda a suite unitaria do Node 20.10
+(o minimo declarado) ao 24, e a de integracao dentro do container do TeX Live.
 
 Para adicionar um template, veja [docs/templates.md](docs/templates.md).
 

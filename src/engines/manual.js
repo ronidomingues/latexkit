@@ -7,8 +7,10 @@
  */
 
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { delimiter, join } from 'node:path';
 import { run, which } from '../util/exec.js';
+import { UserError } from '../util/log.js';
 
 /** Teto de passadas extras. Documentos reais convergem em duas ou tres. */
 const MAX_RERUNS = 4;
@@ -63,6 +65,12 @@ export const manual = {
       onLine?.(`[${backend}] terminou com codigo ${bibResult.code}; seguindo assim mesmo`);
     }
 
+    // Indice remissivo. O latexmk faz isso sozinho; aqui e preciso pedir. Sem
+    // esta etapa o \printindex encontra um .ind inexistente e o livro sai com
+    // o indice vazio, sem nenhum aviso — o tipo de falha que so se descobre
+    // depois de impresso.
+    await buildIndex(join(root, outDir), jobname, onLine);
+
     for (let pass = 0; pass < MAX_RERUNS; pass += 1) {
       last = await run(texEngine, texArgs, { cwd: root, onLine });
       if (last.code !== 0) return last;
@@ -86,5 +94,34 @@ async function needsRerun(logFile) {
     return /Rerun to get|Rerun LaTeX|Please rerun|Label\(s\) may have changed/i.test(log);
   } catch {
     return false;
+  }
+}
+
+/**
+ * Monta o indice remissivo, quando o documento produz um.
+ *
+ * A existencia do `.idx` e a evidencia de que o documento usa \index: nao ha
+ * como saber antes de compilar. Se o arquivo aparecer e o makeindex faltar, o
+ * erro e explicito — um indice vazio passaria despercebido ate a impressao.
+ *
+ * @param {string} outDir caminho absoluto do diretorio de saida
+ * @param {string} jobname
+ * @param {((line: string) => void) | undefined} onLine
+ */
+async function buildIndex(outDir, jobname, onLine) {
+  if (!existsSync(join(outDir, `${jobname}.idx`))) return;
+
+  if (!(await which('makeindex'))) {
+    throw new UserError('Este documento tem indice remissivo, mas o makeindex nao foi encontrado.', [
+      'Instale-o com o restante do TeX Live:',
+      '  Debian/Ubuntu:  sudo apt install texlive-binaries',
+      '',
+      'Ou compile com um motor que ja o traga: latexgen build --engine=docker',
+    ]);
+  }
+
+  const result = await run('makeindex', [`${jobname}.idx`], { cwd: outDir, onLine });
+  if (result.code !== 0) {
+    onLine?.(`[makeindex] terminou com codigo ${result.code}; seguindo assim mesmo`);
   }
 }

@@ -1,14 +1,24 @@
-import { styleText } from 'node:util';
-
-/** Cores sao desligadas quando a saida nao e um TTY ou quando NO_COLOR esta definido. */
-const enabled = process.stdout.isTTY === true && !process.env.NO_COLOR;
+import * as nodeUtil from 'node:util';
 
 /**
- * @param {Parameters<typeof styleText>[0]} format
+ * `util.styleText` so existe a partir do Node 20.12. Importa-lo por nome
+ * quebraria a CLI inteira no Node 20.10 e 20.11 — com um SyntaxError de
+ * modulo, antes mesmo de qualquer comando rodar. Cor e cosmetica: onde a
+ * funcao nao existe, o texto sai sem enfeite.
+ *
+ * @type {((format: string, text: string) => string) | undefined}
+ */
+const styleText = /** @type {any} */ (nodeUtil).styleText;
+
+/** Cores sao desligadas sem TTY, com NO_COLOR, ou sem suporte no runtime. */
+const enabled = Boolean(styleText) && process.stdout.isTTY === true && !process.env.NO_COLOR;
+
+/**
+ * @param {string} format
  * @param {string} text
  */
 function paint(format, text) {
-  return enabled ? styleText(format, text) : text;
+  return enabled && styleText ? styleText(format, text) : text;
 }
 
 export const color = {

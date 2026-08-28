@@ -6,19 +6,48 @@
   "engine": "pdflatex",
   "entry": "main.tex",
   "vars": [
-    { "key": "title", "prompt": "Titulo do livro", "required": true },
-    { "key": "subtitle", "prompt": "Subtitulo", "default": "" },
-    { "key": "author", "prompt": "Autor", "required": true },
-    { "key": "publisher", "prompt": "Editora", "default": "" },
-    { "key": "isbn", "prompt": "ISBN", "default": "" },
-    { "key": "city", "prompt": "Cidade", "default": "" },
-    { "key": "year", "prompt": "Ano", "auto": "year" }
+    {
+      "key": "title",
+      "prompt": "Titulo do livro",
+      "required": true
+    },
+    {
+      "key": "subtitle",
+      "prompt": "Subtitulo",
+      "default": ""
+    },
+    {
+      "key": "author",
+      "prompt": "Autor",
+      "required": true
+    },
+    {
+      "key": "publisher",
+      "prompt": "Editora",
+      "default": ""
+    },
+    {
+      "key": "isbn",
+      "prompt": "ISBN",
+      "default": ""
+    },
+    {
+      "key": "city",
+      "prompt": "Cidade",
+      "default": ""
+    },
+    {
+      "key": "year",
+      "prompt": "Ano",
+      "auto": "year"
+    }
   ],
   "features": {
     "bibliography": true,
     "markdown": true,
     "abstract": false,
-    "figures": true
+    "figures": true,
+    "index": true
   },
   "checks": [
     "metadata",

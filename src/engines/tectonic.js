@@ -30,6 +30,15 @@ export const tectonic = {
         reason: `o tectonic nao oferece ${context.texEngine}`,
       };
     }
+    if (context.needsIndex) {
+      // O tectonic nao chama processadores externos de indice, e tambem nao
+      // enxerga um .ind produzido por fora: o documento sairia com o indice
+      // remissivo vazio, sem erro nenhum. Melhor ficar de fora da escolha.
+      return {
+        available: false,
+        reason: 'o tectonic nao monta indice remissivo, exigido por este documento',
+      };
+    }
     return { available: true };
   },
 

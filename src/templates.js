@@ -17,6 +17,7 @@ import { UserError } from './util/log.js';
  * @property {boolean} [markdown]
  * @property {boolean} [abstract]
  * @property {boolean} [figures]
+ * @property {boolean} [index] o documento monta um indice remissivo (\index/\printindex)
  *
  * @typedef {object} Template
  * @property {string} id

@@ -8,16 +8,34 @@ on:
 
 jobs:
   unit:
-    name: Testes unitarios
+    name: Testes unitarios (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20.10 e o minimo declarado em engines.node, e e onde APIs recentes
+        # do Node quebram primeiro: util.styleText, por exemplo, so existe a
+        # partir do 20.12. Testar o minimo evita publicar algo que nao roda na
+        # versao que o proprio pacote promete suportar.
+        node: ['20.10', '20', '22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run test:unit
+
+  typecheck:
+    name: Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - run: npm install
       - run: npm run typecheck
-      - run: npm run test:unit
 
   integration:
     name: Compilacao dos templates

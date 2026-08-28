@@ -53,8 +53,19 @@ export async function check() {
   }
 }
 
+/** Extensoes que contam como fonte do documento. */
+const SOURCE_EXTENSIONS = new Set(['.tex', '.md']);
+
 /**
- * Le todos os .tex do projeto, exceto os gerados.
+ * Le as fontes do documento, ja com os comentarios removidos.
+ *
+ * Inclui os `.md`: em um projeto que escreve em Markdown, e la que estao as
+ * citacoes, e ignora-los faria o check deixar passar justamente o erro que ele
+ * existe para pegar. Os `.generated.tex` ficam de fora porque sao a traducao
+ * do `.md` — conta-los tambem duplicaria tudo.
+ *
+ * O `%` so inicia comentario em LaTeX. Em Markdown ele e texto comum
+ * ("40% dos casos"), e trata-lo como comentario apagaria o resto da linha.
  *
  * @param {string} root
  * @returns {Promise<Array<{ file: string, content: string }>>}
@@ -66,9 +77,15 @@ async function readSources(root) {
     const full = join(root, dir);
     if (!existsSync(full)) continue;
     for (const file of await walk(full)) {
-      if (extname(file) !== '.tex') continue;
+      const extension = extname(file).toLowerCase();
+      if (!SOURCE_EXTENSIONS.has(extension)) continue;
       if (file.endsWith('.generated.tex') || file.endsWith('metadata.tex')) continue;
-      sources.push({ file: relative(root, file), content: await readFile(file, 'utf8') });
+
+      const raw = await readFile(file, 'utf8');
+      sources.push({
+        file: relative(root, file),
+        content: extension === '.tex' ? stripComments(raw) : raw,
+      });
     }
   }
   return sources;
@@ -125,16 +142,14 @@ function checkFigures(sources, kind) {
   const findings = [];
 
   for (const { file, content } of sources) {
-    // Comentarios saem antes da busca pelo ambiente: um bloco de exemplo
-    // comentado nao e uma figura do documento. stripComments preserva as
-    // quebras de linha, entao a numeracao continua valendo.
-    const active = stripComments(content);
+    // `content` ja vem sem comentarios de readSources, e stripComments
+    // preserva as quebras de linha, entao a numeracao continua valendo.
     const pattern = /\\begin\{figure\}([\s\S]*?)\\end\{figure\}/g;
-    for (const match of active.matchAll(pattern)) {
+    for (const match of content.matchAll(pattern)) {
       const body = match[1];
       if (!body.trim()) continue;
 
-      const line = active.slice(0, match.index).split('\n').length;
+      const line = content.slice(0, match.index).split('\n').length;
       if (kind === 'caption' && !/\\caption\s*\{/.test(body)) {
         findings.push({
           level: 'error',
@@ -180,7 +195,7 @@ async function citationFindings(root, config, text, enabled) {
   const entries = new Set(
     [...stripComments(bib).matchAll(/@\w+\s*\{\s*([^,\s]+)\s*,/g)].map((match) => match[1]),
   );
-  const cited = collectCitations(stripComments(text));
+  const cited = collectCitations(text);
 
   /** @type {Finding[]} */
   const findings = [];
@@ -252,7 +267,7 @@ async function checkUnusedFigures(root, text) {
     .filter((entry) => entry.isFile() && !entry.name.startsWith('.'))
     .map((entry) => entry.name);
 
-  const included = stripComments(text);
+  const included = text;
   return files
     .filter((name) => {
       const stem = name.replace(/\.[^.]+$/, '');

@@ -10,6 +10,7 @@
 import { watch as watchFs } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../config.js';
+import { loadTemplate } from '../templates.js';
 import { contextFrom, resolveEngine } from '../engines/index.js';
 import { build } from './build.js';
 import { color, error, info, step, UserError } from '../util/log.js';
@@ -25,7 +26,8 @@ const DEBOUNCE_MS = 300;
  */
 export async function watch(args = {}) {
   const { config, root } = await loadConfig();
-  const context = contextFrom(root, config);
+  const template = await loadTemplate(config.template);
+  const context = contextFrom(root, config, { needsIndex: template.features.index });
   const { engine } = await resolveEngine(context, {
     requested: /** @type {import('../config.js').EngineId | 'auto'} */ (
       args.engine ?? config.engine
