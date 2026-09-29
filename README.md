@@ -29,6 +29,11 @@ cd latexkit
 npm link               # deixa o comando latexkit disponivel no terminal
 ```
 
+O `npm link` aponta para a pasta clonada, e nao para uma copia dela. Nao apague
+nem mova essa pasta: o comando `latexkit` e todos os projetos ligados a ele
+param de funcionar. Pelo mesmo motivo, um `git pull` nela atualiza todos de uma
+vez.
+
 Nos projetos gerados, use `npm link latexkit` no lugar de `npm install`. Para
 usar em um projeto ja existente:
 
@@ -258,6 +263,10 @@ local da maquina).
 Todo projeto gerado ja vem com `.github/workflows/build-pdf.yml`: a cada push o
 PDF e compilado em container e anexado a execucao; em tags `v*`, tambem vai
 para a release.
+
+Enquanto o latexkit nao esta no npm, o workflow baixa o codigo direto deste
+repositorio (branch `main`) e o liga ao projeto com `npm link`, sem precisar de
+nenhuma configuracao no repositorio do projeto.
 
 ## Desenvolvimento
 
