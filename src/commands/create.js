@@ -93,7 +93,7 @@ function report(result, template, mode) {
   info('');
   step('Proximos passos:');
   if (mode === 'new') hint(`cd ${result.root}`);
-  hint('npm install       # instala o latexkit no projeto');
+  hint('npm link latexkit # liga o latexkit ao projeto');
   hint('npm run build     # gera out/main.pdf');
   info('');
   hint('Edite o texto em content/ e os metadados em latexkit.config.json.');

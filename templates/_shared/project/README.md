@@ -5,13 +5,16 @@
 ## Comandos
 
 ```bash
-npm install        # instala o latexkit (uma vez)
+npm link latexkit  # liga o latexkit ao projeto (uma vez)
 npm run build      # compila e gera out/main.pdf
 npm run watch      # recompila a cada arquivo salvo
 npm run check      # confere metadados, figuras e citacoes
 npm run clean      # remove os arquivos auxiliares
 npm run doctor     # mostra quais motores LaTeX estao disponiveis
 ```
+
+O `npm link` pressupoe o latexkit ja instalado na maquina, conforme a
+[instalacao](https://github.com/ronidomingues/latexkit#instalacao) no README dele.
 
 O PDF final fica em `out/main.pdf`.
 
