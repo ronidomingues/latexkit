@@ -1,8 +1,7 @@
 # latexkit
 
-[![npm](https://img.shields.io/npm/v/latexkit)](https://www.npmjs.com/package/latexkit)
 [![CI](https://github.com/ronidomingues/latexkit/actions/workflows/test.yml/badge.svg)](https://github.com/ronidomingues/latexkit/actions/workflows/test.yml)
-[![node](https://img.shields.io/node/v/latexkit)](https://nodejs.org)
+[![node](https://img.shields.io/badge/node-%3E%3D20.10.0-339933)](https://nodejs.org)
 
 Projetos LaTeX academicos prontos para compilar, em um comando.
 
@@ -13,19 +12,28 @@ sem que voce precise lembrar a sequencia `pdflatex → bibtex → pdflatex →
 pdflatex`.
 
 ```bash
-npx latexkit new article meu-artigo
+latexkit new article meu-artigo
 cd meu-artigo
-npm install
+npm link latexkit
 npm run build          # out/main.pdf
 ```
 
 ## Instalacao
 
-Nao precisa instalar nada: `npx latexkit` baixa e executa na hora. Para usar em
-um projeto ja existente:
+O latexkit ainda nao esta publicado no npm. Por enquanto, instale a partir do
+repositorio:
 
 ```bash
-npm install -D latexkit
+git clone https://github.com/ronidomingues/latexkit.git
+cd latexkit
+npm link               # deixa o comando latexkit disponivel no terminal
+```
+
+Nos projetos gerados, use `npm link latexkit` no lugar de `npm install`. Para
+usar em um projeto ja existente:
+
+```bash
+npm link latexkit
 npx latexkit init article
 ```
 
@@ -210,7 +218,7 @@ template para um projeto que ja existe — sem tocar em uma linha do que voce
 escreveu.
 
 ```bash
-npm update latexkit
+git -C <pasta-do-latexkit> pull   # atualiza o clone
 npx latexkit upgrade --dry-run   # o que mudaria
 npx latexkit upgrade             # aplica
 ```
