@@ -23,8 +23,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Instalar dependencias
-        run: npm install
+      # O latexkit ainda nao esta publicado no npm: o codigo vem direto do
+      # repositorio e e ligado ao projeto com npm link.
+      - uses: actions/checkout@v4
+        with:
+          repository: ronidomingues/latexkit
+          path: .latexkit-src
+
+      - name: Instalar o latexkit
+        run: |
+          (cd .latexkit-src && npm link)
+          npm link latexkit
 
       - name: Conferir o documento
         run: npm run check
